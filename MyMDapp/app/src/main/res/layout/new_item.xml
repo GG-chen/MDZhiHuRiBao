@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@android:color/white">
+    <TextView
+        android:id="@+id/before_data"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:clickable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/new_title"
+            android:text="趁着降价赶紧买了，东西比效果图还要惊艳，感觉都还不错"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            />
+        <ImageView
+            android:id="@+id/new_image"
+            android:layout_width="95dp"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_new"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

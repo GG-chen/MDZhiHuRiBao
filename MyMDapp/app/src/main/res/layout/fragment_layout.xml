@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <com.example.shinelon.mymdapp.ui.view.MySwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.shinelon.mymdapp.ui.view.WrapRecyclerView
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ></com.example.shinelon.mymdapp.ui.view.WrapRecyclerView>
+
+        </LinearLayout>
+
+
+
+    </com.example.shinelon.mymdapp.ui.view.MySwipeRefreshLayout>
+    <include
+        layout="@layout/custom_toolbar"/>
+
+
+
+</RelativeLayout>
