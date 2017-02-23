@@ -29,8 +29,6 @@
 
 
     </com.example.shinelon.mymdapp.ui.view.MySwipeRefreshLayout>
-    <include
-        layout="@layout/custom_toolbar"/>
 
 
 

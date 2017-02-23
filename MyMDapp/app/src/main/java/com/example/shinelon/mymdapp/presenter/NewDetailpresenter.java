@@ -8,9 +8,12 @@ import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.HomeService;
 import com.example.shinelon.mymdapp.modle.http.NewDetailService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
+import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFrg;
 
 import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -25,23 +28,22 @@ public class NewDetailpresenter extends BasePretener<HomeFrg> {
     }
     public void loadNewsList(int id) {
 
-        newDetailService.getNewDetail(id)
+        Subscription subscription = newDetailService.getNewDetail(id)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<NewDetailBean>() {
                     @Override
                     public void onCompleted() {
-                         //mMvpView.log("onCompleted!!");
+
                     }
 
                     @Override
-                    public void onError(Throwable throwable) {
-                        // mMvpView.log(throwable.getMessage());
+                    public void onError(Throwable e) {
+
                     }
 
                     @Override
                     public void onNext(NewDetailBean newDetailBean) {
-                        Log.d("DetailNew", newDetailBean.getTitle());
                         mMvpView.loadNewDetail(newDetailBean);
 
                     }

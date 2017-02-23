@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.bean.NewDetailBean;
+import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.presenter.NewDetailpresenter;
@@ -96,7 +97,7 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
     }
 
     private void setupData(CharSequence body) {
-        Log.d("DetailNew", bean.title);
+        Log.d("DetailNew", bean.getTitle());
         collapsingToolbar.setTitle(bean.getTitle());
         //author.setText(bean.getAuthor().getName());
         ImageUtils.getInstance().setImage(imageView,  bean.getImage());

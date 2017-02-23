@@ -1,12 +1,14 @@
 package com.example.shinelon.mymdapp.modle.http;
 
 
+import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
+import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.squareup.okhttp.ResponseBody;
 
 
-import retrofit.Call;
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * Created by Shinelon on 2017/1/31.
@@ -15,8 +17,8 @@ import retrofit.http.Path;
 public interface HomeService {
     //获取最新新闻
     @GET("4/news/latest")
-    Call<ResponseBody> getNewsList();
+    Observable<NewsListBean> getNewsList();
     //获取过往新闻
     @GET("4/news/before/{date}")
-    Call<ResponseBody>  getNewsList(@Path("date") String data);
+    Observable<NewsListBean>  getNewsList(@Path("date") String date);
 }

@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     protected static String TAG_LOG = null;
     protected Context context;
-    protected LinearLayoutManager layoutManager;
     protected View view;
     protected MyApplication my;
 

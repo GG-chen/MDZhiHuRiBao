@@ -1,5 +1,7 @@
 package com.example.shinelon.mymdapp.modle.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import static android.R.id.list;
@@ -9,17 +11,28 @@ import static android.R.id.list;
  */
 
 public class NewDetailBean {
-    public String body;
-    public List css;
-    public String ga_prefix;
-    public int id;
-    public String image;
-    public String image_source;
-    public List images;
-    public List js;
-    public String share_url;
-    public String title;
-    public int type;
+    @SerializedName("body")
+    private String body;
+    @SerializedName("css")
+    private List css;
+    @SerializedName("ga_prefix")
+    private String ga_prefix;
+    @SerializedName("id")
+    private int id;
+    @SerializedName("image")
+    private String image;
+    @SerializedName("image_source")
+    private String image_source;
+    @SerializedName("images")
+    private List images;
+    @SerializedName("js")
+    private List js;
+    @SerializedName("share_url")
+    private String share_url;
+    @SerializedName("title")
+    private String title;
+    @SerializedName("type")
+    private int type;
 
     public String getBody() {
         return body;
@@ -107,5 +120,22 @@ public class NewDetailBean {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "NewDetailBean{" +
+                "body='" + body + '\'' +
+                ", css=" + css +
+                ", ga_prefix='" + ga_prefix + '\'' +
+                ", id=" + id +
+                ", image='" + image + '\'' +
+                ", image_source='" + image_source + '\'' +
+                ", images=" + images +
+                ", js=" + js +
+                ", share_url='" + share_url + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

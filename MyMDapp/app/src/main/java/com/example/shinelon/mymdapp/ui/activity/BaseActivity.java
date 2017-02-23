@@ -87,23 +87,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public String getBeforeDate(int i, boolean isWeek) {
-        SimpleDateFormat format = null;
-        if (isWeek) {
-            format = new SimpleDateFormat("MM月dd日  E");
-        } else {
-           format = new SimpleDateFormat("yyyyMMdd");
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(data);
-        calendar.add(Calendar.DAY_OF_MONTH, -i);
-        Date beforeDdate = calendar.getTime();
-        String beforeTime = format.format(beforeDdate);
-        return beforeTime;
-    }
     public String getFormatDate(String date) {
-        //String formatDate = time.substring(0, 3) + "-" + time.substring(4, 5) + "-" + time.substring(6, 7);
         Log.d("getFormatDate", "date " + date);
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String lastDate = null;

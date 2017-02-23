@@ -1,38 +1,22 @@
 package com.example.shinelon.mymdapp.modle.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Shinelon on 2017/1/31.
  */
 
-public class NewsListBean implements Parcelable{
+public class NewsListBean {
+    @SerializedName("date")
     private String date;
+    @SerializedName("stories")
     private List<Stories> stories;
+    @SerializedName("top_stories")
     private List<TopStoried> top_stories;
-
-
-
-    protected NewsListBean(Parcel in) {
-        date = in.readString();
-        stories = in.readArrayList(Stories.class.getClassLoader());
-        top_stories = in.readArrayList(TopStoried.class.getClassLoader());
-    }
-
-    public static final Creator<NewsListBean> CREATOR = new Creator<NewsListBean>() {
-        @Override
-        public NewsListBean createFromParcel(Parcel in) {
-            return new NewsListBean(in);
-        }
-
-        @Override
-        public NewsListBean[] newArray(int size) {
-            return new NewsListBean[size];
-        }
-    };
 
     public String getDate() {
         return date;
@@ -58,44 +42,26 @@ public class NewsListBean implements Parcelable{
         this.top_stories = top_stories;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.date);
-        dest.writeList(stories);
-        dest.writeList(top_stories);
-    }
-
-    public static class Stories implements Parcelable{
+    public class Stories {
+        @SerializedName("ga_prefix")
         private String ga_prefix;
+        @SerializedName("id")
         private int id;
-        private List images;
+        @SerializedName("images")
+        private String[] images;
+        @SerializedName("title")
         private String title;
+        @SerializedName("type")
         private int type;
+        private String date ;
 
-        protected Stories(Parcel in) {
-            ga_prefix = in.readString();
-            id = in.readInt();
-            images = in.readArrayList(List.class.getClassLoader());
-            title = in.readString();
-            type = in.readInt();
+        public String getDate() {
+            return date;
         }
 
-        public static final Creator<Stories> CREATOR = new Creator<Stories>() {
-            @Override
-            public Stories createFromParcel(Parcel in) {
-                return new Stories(in);
-            }
-
-            @Override
-            public Stories[] newArray(int size) {
-                return new Stories[size];
-            }
-        };
+        public void setDate(String date) {
+            this.date = date;
+        }
 
         public String getGa_prefix() {
             return ga_prefix;
@@ -113,11 +79,11 @@ public class NewsListBean implements Parcelable{
             this.id = id;
         }
 
-        public List getImages() {
+        public String[] getImages() {
             return images;
         }
 
-        public void setImages(List images) {
+        public void setImages(String[] images) {
             this.images = images;
         }
 
@@ -138,46 +104,39 @@ public class NewsListBean implements Parcelable{
         }
 
         @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.ga_prefix);
-            dest.writeInt(this.id);
-            dest.writeList(this.images);
-            dest.writeString(this.title);
-            dest.writeInt(this.type);
+        public String toString() {
+            return "Stories{" +
+                    "ga_prefix='" + ga_prefix + '\'' +
+                    ", id=" + id +
+                    ", images=" + Arrays.toString(images) +
+                    ", title='" + title + '\'' +
+                    ", type=" + type +
+                    ", date='" + date + '\'' +
+                    '}';
         }
     }
 
-    public static  class TopStoried implements Parcelable{
+    public class TopStoried{
+        @SerializedName("ga_prefix")
         private String ga_prefix;
+        @SerializedName("id")
         private int id;
-        private String image;
+        @SerializedName("image")
+        private String images;
+        @SerializedName("title")
         private String title;
+        @SerializedName("type")
         private int type;
+        private String date ;
 
-        protected TopStoried(Parcel in) {
-            ga_prefix = in.readString();
-            id = in.readInt();
-            image = in.readString();
-            title = in.readString();
-            type = in.readInt();
+        public String getDate() {
+            return date;
         }
 
-        public static final Creator<TopStoried> CREATOR = new Creator<TopStoried>() {
-            @Override
-            public TopStoried createFromParcel(Parcel in) {
-                return new TopStoried(in);
-            }
+        public void setDate(String date) {
+            this.date = date;
+        }
 
-            @Override
-            public TopStoried[] newArray(int size) {
-                return new TopStoried[size];
-            }
-        };
 
         public String getGa_prefix() {
             return ga_prefix;
@@ -195,12 +154,12 @@ public class NewsListBean implements Parcelable{
             this.id = id;
         }
 
-        public String getImage() {
-            return image;
+        public String getImages() {
+            return images;
         }
 
-        public void setImage(String image) {
-            this.image = image;
+        public void setImages(String images) {
+            this.images = images;
         }
 
         public String getTitle() {
@@ -220,17 +179,24 @@ public class NewsListBean implements Parcelable{
         }
 
         @Override
-        public int describeContents() {
-            return 0;
+        public String toString() {
+            return "TopStoried{" +
+                    "ga_prefix='" + ga_prefix + '\'' +
+                    ", id=" + id +
+                    ", images='" + images + '\'' +
+                    ", title='" + title + '\'' +
+                    ", type=" + type +
+                    ", date='" + date + '\'' +
+                    '}';
         }
+    }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.ga_prefix);
-            dest.writeInt(this.id);
-            dest.writeString(image);
-            dest.writeString(this.title);
-            dest.writeInt(this.type);
-        }
+    @Override
+    public String toString() {
+        return "NewsListBean{" +
+                "date='" + date + '\'' +
+                ", stories=" + stories +
+                ", top_stories=" + top_stories +
+                '}';
     }
 }

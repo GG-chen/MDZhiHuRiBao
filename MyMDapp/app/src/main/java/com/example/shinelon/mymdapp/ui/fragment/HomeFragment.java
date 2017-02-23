@@ -44,21 +44,18 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     private NewsListBean newsListBean;
     private HomePresenter homePresenter;
     private HomeActivity home;
-    public ArrayList<NewItemBean> itemBeans = new ArrayList<>();
     public ArrayList<View> views = new ArrayList<>();
     @InjectView(R.id.list_view)
     WrapRecyclerView recyclerView;
     @InjectView(R.id.swipe_layout)
     MySwipeRefreshLayout refreshLayout;
-    //@InjectView(R.id.head_viewpager)
     ViewPager head_viewpager;
     public RefreshRecyclerAdapter adapter;
     public ViewPagerAdapter pagerAdapter;
-    private int currentPager = 0;
+    private int currentPager = 1000;
     private boolean isFirst = true;
-    private int beforeDateCount = 0;
-    private RecyclerView.LayoutManager manager;
-    private int scrollY = 0;
+    private String needLodeDate = null;
+    private LinearLayoutManager manager;
     private boolean isLoading = false;
     Handler handler = new Handler() {
         @Override
@@ -66,14 +63,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1 :
-                   // delectFoot();
                     Log.d("ReflactText", "handleMessage: ");
-                    isLoading = false;
-                    adapter.notifyDataSetChanged();
-                    pagerAdapter.notifyDataSetChanged();
-                    Log.d("Test", "run: !!");
-
-
                     if (isFirst) {
                         handler.sendEmptyMessageDelayed(2, 3000);
                         isFirst  = false;
@@ -93,44 +83,35 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     @Override
     protected void initFragment() {
         home = (HomeActivity) getActivity();
-        home.setupToolbar(view);
-        home.setupDrawer();
+        /*home.setupToolbar(view);
+        home.setupDrawer();*/
         manager = new LinearLayoutManager(context) ;
         recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
         homePresenter = new HomePresenter(context);
         homePresenter.attachView(this);
-        adapter = new RefreshRecyclerAdapter(context,itemBeans);
+        adapter = new RefreshRecyclerAdapter(context);
         adapter.setOnItemClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                scrollY = dy + scrollY;
-                if (Math.abs(scrollY) < 300) {
-                    float percentage = (float) Math.abs(scrollY) / (float) 300;
-                    home.actionBarToolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 19, 121, 214));
-                    //Log.d("HomeFragment", " dy = " + scrollY);
-                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    //屏幕中最后一个可见子项的position
-                    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                   // Log.d("Last", "item: " + lastVisibleItemPosition);
+                if (dy > 0) {
+                    int visibleItemCount = manager.getChildCount();
+                    int totalItemCount = manager.getItemCount();
+                    int pastVisibleItems = manager.findFirstVisibleItemPosition();
+                    if (!isLoading && (visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                        isLoading = true;
+                        Log.d("onScrolled", "start loading!!");
+                        homePresenter.loadNewsList(needLodeDate);
+                        adapter.startLoding();
+                    }
                 }
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                //Log.d("onScrollStateChanged", "onScrollStateChanged: " + newState);
-                if (!recyclerView.canScrollVertically(1) && newState == 2 && !isFirst) {
-                    Log.d("lastItemVisible", "load" );
-                    isLoading = true;
-                    //addFoot();
-                    beforeDateCount ++;
-                    synchronized (this) {
-                        homePresenter.loadNewsList(String.valueOf(home.getBeforeDate(beforeDateCount, false)));
-                    }
-
-                }
             }
         });
         setupPager();
@@ -139,29 +120,18 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
 
 
     }
-
-    private void addFoot() {
-        recyclerView.addFootView(LayoutInflater.from(context).inflate(R.layout.foot_layout, null));
-
-    }
-    private void delectFoot() {
-        recyclerView.mFootViews.clear();
-    }
-
     private void loadNewData() {
         Log.d("TEST！！", "loadNewData: ");
+        needLodeDate = home.getCurrentData();
         homePresenter.loadLastNewsList();
-        homePresenter.loadNewsList(String.valueOf(home.getBeforeDate(beforeDateCount, false)));
-
     }
 
     private void setupPager() {
         head_viewpager = new ViewPager(context);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
         head_viewpager.setLayoutParams(params);
-        pagerAdapter = new ViewPagerAdapter(getActivity(), views);
+        pagerAdapter = new ViewPagerAdapter(getActivity());
         head_viewpager.setAdapter(pagerAdapter);
-        head_viewpager.setCurrentItem(Integer.MAX_VALUE / 2);
         recyclerView.addHeaderView(head_viewpager);
         recyclerView.setAdapter(adapter);
     }
@@ -172,6 +142,8 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
             @Override
             public void onRefresh() {
                 Log.d(TAG_LOG, "onRefresh!! ");
+                newsListBean = null;
+                notifyDataHasChanged();
                 loadNewData();
                 refreshLayout.setRefreshing(false);
                 Toast.makeText(context, "更新成功！！", Toast.LENGTH_SHORT).show();
@@ -197,87 +169,42 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
             newsListBean = data;
             Log.d(TAG_LOG, "get the data!!" + data.getStories().get(0).getTitle());
             Log.d(TAG_LOG, "get the data!!" + data.getTop_stories().get(0).getTitle());
-            itemBeans.clear();
-           // topBeans.clear();
             views.clear();
-            setStory(data);
-            setTop_story(data);
-            currentPager = 1;
-            Log.d(TAG_LOG, "结束!!");
+            adapter.addItem(newsListBean.getStories());
+            pagerAdapter.addItem(newsListBean.getTop_stories());
             handler.sendEmptyMessage(1);
-            if (!MyUtils.isNetworkAvailable(context)) {
-
-            }
+            homePresenter.loadNewsList(needLodeDate);
+            Log.d(TAG_LOG, "结束!!");
+            notifyDataHasChanged();
 
         }
 
 
     }
 
-    private void setStory(NewsListBean data) {
-        for (int i = 0; i < data.getStories().size(); i++) {
-            int id = data.getStories().get(i).getId();
-            String title = data.getStories().get(i).getTitle();
-            String images = (String) data.getStories().get(i).getImages().get(0);
-            NewItemBean bean = new NewItemBean(id,title,images);
-            itemBeans.add(bean);
-            //Log.d(TAG_LOG, "get the story" + itemBeans.size());
-        }
-    }
-
-    private void setTop_story(final NewsListBean data) {
-                ImageUtils.getInstance().setContext(context);
-                Log.d("TEST", "setTop_story!!!!!" + data.getTop_stories().size());
-                for (int i = 0; i < data.getTop_stories().size(); i++) {
-                    ImageView imageView = new ImageView(context);
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    //imageView.setImageBitmap(ImageUtils.getInstance().getBitmap(data.getTop_stories().get(i).getImage()));
-                    ImageUtils.getInstance().setImage(imageView, data.getTop_stories().get(i).getImage());
-                    imageView.setTag(data.getTop_stories().get(i).getId());
-                    views.add(imageView);
-                    Log.d("TEST!!!!!!!!!!!!!!!!!!", "run" + views.size());
-
-                }
-                    pagerAdapter.notifyDataSetChanged();
-
-
-                Log.d(TAG_LOG, "get the View = " + views.size());
-
-
-
-    }
-    private void setBeforeStory(NewsListBean data) {
-        for (int i = 0; i < data.getStories().size(); i++) {
-            int id = data.getStories().get(i).getId();
-            String title = data.getStories().get(i).getTitle();
-            String images = (String) data.getStories().get(i).getImages().get(0);
-            NewItemBean bean = new NewItemBean(id,title,images);
-            if (i == 0) {
-                bean.setDate(home.getFormatDate(data.getDate()));
-            }
-            itemBeans.add(bean);
-        }
-        Log.d("ReflactText", "setBeforeStory: " + itemBeans.get(1).getTitle());
-        handler.sendEmptyMessage(1);
-
+    private void notifyDataHasChanged() {
+        pagerAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadMore(NewsListBean data) {
-        if (data != null) {
-            Log.d("loadMore", "loadMore: " + data.getStories().size());
-            setBeforeStory(data);
+        Log.d("loadMore", "loadMore: " + data.getStories().size());
+        if (isLoading) {
+            adapter.finishLoding();
+            isLoading = false;
         }
+        needLodeDate = data.getDate();
+        adapter.addItem(data.getStories());
+        //handler.sendEmptyMessage(1);
+        notifyDataHasChanged();
+
     }
 
     @Override
     public void loadNewDetail(NewDetailBean data) {
 
     }
-
-
-
 
     @Override
     public void onItemClick(View view, int data) {

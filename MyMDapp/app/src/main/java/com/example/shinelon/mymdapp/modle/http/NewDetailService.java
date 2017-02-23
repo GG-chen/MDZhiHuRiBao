@@ -2,8 +2,8 @@ package com.example.shinelon.mymdapp.modle.http;
 
 import com.example.shinelon.mymdapp.modle.bean.NewDetailBean;
 
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**

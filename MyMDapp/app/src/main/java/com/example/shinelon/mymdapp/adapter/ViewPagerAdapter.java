@@ -2,6 +2,8 @@ package com.example.shinelon.mymdapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -11,9 +13,13 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 
 
+import com.example.shinelon.mymdapp.R;
+import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
+import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.ui.activity.NewDetailActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Shinelon on 2017/2/1.
@@ -21,19 +27,17 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-    public ArrayList<View> views;
+    public ArrayList<NewsListBean.TopStoried> list = new ArrayList<>();
+    private List<ImageView> views = new ArrayList<>();
     private Context context;
 
-    public ViewPagerAdapter(Context context, ArrayList<View> views) {
-        this.views = views;
+    public ViewPagerAdapter(Context context) {
         this.context = context;
         Log.d("PagerAdapter", "structure ");
     }
 
     @Override
     public int getCount() {
-        //Log.d("PagerAdapter", "count " + views.size());
-        //return views.size();
         if (views.size() == 0) {
             return 0;
         }
@@ -47,35 +51,52 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(final ViewGroup container, int position) {
-
-            //Log.d("PagerAdapter", "instantiateItem!!");
-
-        position %= views.size();
-        if (position<0){
-            position = views.size()+position;
+        position %= list.size();
+        if (position < 0) {
+            position = list.size() + position;
         }
-        final ImageView imageView = (ImageView) views.get(position);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, NewDetailActivity.class);
-                intent.putExtra("newId", (Integer) imageView.getTag());
-                context.startActivity(intent);
-            }
-        });
+        ImageView imageView = views.get(position);
+        ImageUtils.getInstance().setImage(imageView, list.get(position).getImages());
+        Log.d("instantiateItem", "instantiateItem: " + position);
         ViewParent viewParent = imageView.getParent();
-        if (viewParent!=null){
-            ViewGroup parent = (ViewGroup)viewParent;
+        if (viewParent != null) {
+            ViewGroup parent = (ViewGroup) viewParent;
             parent.removeView(imageView);
         }
-
-        container.addView(imageView, 0);
+        container.addView(imageView);
         return imageView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         //container.removeView(views.get(position));
+    }
+
+    public void addItem(List<NewsListBean.TopStoried> topStorieds) {
+        if (topStorieds != null) {
+            views.clear();
+            list.clear();
+            Log.d("addItem", "addItem: topStorieds " + topStorieds.size());
+            list.addAll(topStorieds);
+            for (int i = 0; i < topStorieds.size(); i++) {
+                final NewsListBean.TopStoried topStoried = topStorieds.get(i);
+                ImageView imageView = new ImageView(context);
+                imageView.setBackgroundResource(R.drawable.ic_new);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, NewDetailActivity.class);
+                        intent.putExtra("newId", topStoried.getId());
+                        context.startActivity(intent);
+                    }
+                });
+                views.add(imageView);
+            }
+
+
+        }
+
     }
 
 

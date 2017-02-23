@@ -5,21 +5,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.shinelon.mymdapp.MyApplication;
+import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.HomeService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
+import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFrg;
 import com.example.shinelon.mymdapp.utils.MyUtils;
 import com.google.gson.Gson;
-import com.squareup.okhttp.ResponseBody;
-
-import java.io.IOException;
 import java.util.List;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Shinelon on 2017/1/31.
@@ -35,107 +33,54 @@ public class HomePresenter extends BasePretener<HomeFrg> {
         this.context = context;
         my = (MyApplication) context.getApplicationContext();
     }
-    public void loadNewsList(String date) {
-        if (MyUtils.isNetworkAvailable(context)) {
-            Call<ResponseBody > call = homeService.getNewsList(date);
-            call.enqueue(new Callback<ResponseBody >() {
-                @Override
-                public void onResponse(Response<ResponseBody > response, Retrofit retrofit) {
+    public void loadNewsList(final String date) {
+            Subscription subscription = homeService.getNewsList(date)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Observer<NewsListBean>() {
+                        @Override
+                        public void onCompleted() {
 
-                    String json = null;
-                    try {
-                        json = response.body().string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    my.getDbService().saveBeforeNews(json);
-                    mMvpView.loadMore(getJson2Object(json));
+                        }
 
-                }
+                        @Override
+                        public void onError(Throwable e) {
 
-                @Override
-                public void onFailure(Throwable t) {
+                        }
 
-                }
-
-            });
-        } else {
-            //TODO
-        }
-
+                        @Override
+                        public void onNext(NewsListBean newListBean) {
+                            newListBean.getStories().get(0).setDate(((HomeActivity)context).getFormatDate(newListBean.getDate()));
+                            mMvpView.loadMore(newListBean);
+                        }
+                    });
 
     }
 
     public void loadLastNewsList() {
-        if (MyUtils.isNetworkAvailable(context)) {
             Log.d("TEST！！", "loadLastNewsList: ");
-            Call<ResponseBody> call = homeService.getNewsList();
-            call.enqueue(new Callback<ResponseBody >() {
-                @Override
-                public void onResponse(Response<ResponseBody > response, Retrofit retrofit) {
-                    String json = null;
-                    try {
-                        json = response.body().string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    my.getDbService().saveNews(json);
-                    Log.d("TEST！！", "loadLastNewsList: " + json);
-                    mMvpView.refresh(getJson2Object(json));
-                    Log.d("TEST！！", "onResponse: ");
-                }
+            Subscription subscription = homeService.getNewsList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Observer<NewsListBean>() {
+                        @Override
+                        public void onCompleted() {
 
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.d("TEST！！", "onFailure: " + t.toString());
+                        }
 
-                }
-            });
-        } else {
-            Toast.makeText(context, "没有网络！！" , Toast.LENGTH_SHORT).show();
-            loadNewsListFromDB();
-        }
+                        @Override
+                        public void onError(Throwable e) {
 
+                        }
+
+                        @Override
+                        public void onNext(NewsListBean newsListBean) {
+                            Log.d("HomePresenter！！", "loadLastNewsList: " + newsListBean.getStories().get(0).getImages()[0]);
+                            mMvpView.refresh(newsListBean);
+                        }
+                    });
 
     }
-
-    private NewsListBean getJson2Object(String json) {
-        // Log.d("TEST！！", "getJson2Object: " + json);
-        Gson gson = new Gson();
-        NewsListBean bean = gson.fromJson(json, NewsListBean.class);
-        Log.d("TEST！！", "getJson2Object: " + bean.getDate());
-        return bean;
-    }
-
-    public void loadNewsListFromDB() {
-        String lastNews = my.getDbService().queryNews();
-        Log.d("数据库", "loadNewsListFromDB: " + lastNews);
-        if (lastNews != null) {
-            mMvpView.refresh(getJson2Object(lastNews));
-        }
-       loadBeforeNewsFromDB();
-
-    }
-
-    public void loadBeforeNewsFromDB() {
-        List<String> beforeNews = my.getDbService().queryBeforeNews();
-        if (beforeNews != null) {
-            for (int i = 0; i < beforeNews.size(); i++) {
-                //Log.d("数据库", "loadBeforeNewsListFromDB: " + beforeNews.get(i).toString());
-                mMvpView.loadMore(getJson2Object(beforeNews.get(i).toString()));
-            }
-        }
-    }
-
-
-    private NewsListBean getJson2ObjectBefore(String json) {
-        Gson gson = new Gson();
-        NewsListBean bean = gson.fromJson(json, NewsListBean.class);
-        return bean;
-    }
-
-
-
 
     @Override
     public void attachView(HomeFrg mvpView) {
