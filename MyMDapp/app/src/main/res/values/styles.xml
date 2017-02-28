@@ -33,4 +33,14 @@
         <item name="contentScrim">?attr/colorPrimary</item>
     </style>
 
+    <style name="DayTheme" >
+        <item name="custom_backgroud" >#f7f7f7</item>
+        <item name="custom_textcolor" >#525252</item>
+    </style>
+
+    <style name="NightTheme" >
+        <item name="custom_backgroud" >#1e1e2a</item>
+        <item name="custom_textcolor" >#868a96</item>
+    </style>
+
 </resources>

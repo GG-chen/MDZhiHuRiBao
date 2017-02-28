@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navigation_header_container"
-    android:background="@android:color/white"
+    android:background="?attr/custom_backgroud"
     android:layout_width="350dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
@@ -25,57 +26,77 @@
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
-   <RadioGroup
+   <com.example.shinelon.mymdapp.ui.view.ThemeRadioGroup
        android:id="@+id/button_group"
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <RadioButton
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       >
+       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
            android:id="@+id/home"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="1"
            android:layout_gravity="center_horizontal"
            android:text="首页"
+           android:textColor="?attr/custom_textcolor"
+           android:background="?attr/custom_backgroud"
            android:button="@null"
            />
-       <RadioButton
+       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
            android:id="@+id/psycology"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="1"
            android:layout_gravity="center_horizontal"
            android:text="日常心理学"
+           android:textColor="?attr/custom_textcolor"
+           android:background="?attr/custom_backgroud"
            android:button="@null"
            />
-       <RadioButton
+       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
            android:id="@+id/moive"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="1"
            android:layout_gravity="center_horizontal"
            android:text="电影日报"
+           android:textColor="?attr/custom_textcolor"
+           android:background="?attr/custom_backgroud"
            android:button="@null"
            />
-       <RadioButton
+       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
            android:id="@+id/bored"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="1"
            android:layout_gravity="center_horizontal"
            android:text="不许无聊"
+           android:textColor="?attr/custom_textcolor"
+           android:background="?attr/custom_backgroud"
            android:button="@null"
            />
-       <RadioButton
+       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
            android:id="@+id/company"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="1"
            android:layout_gravity="center_horizontal"
            android:text="大公司日报"
+           android:textColor="?attr/custom_textcolor"
+           android:background="?attr/custom_backgroud"
            android:button="@null"
            />
+   </com.example.shinelon.mymdapp.ui.view.ThemeRadioGroup>
+    <com.example.shinelon.mymdapp.ui.view.ThemeButton
+        android:id="@+id/switch_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="切换模式"
+        android:textSize="15sp"
+        android:textColor="?attr/custom_textcolor"
+        android:background="?attr/custom_backgroud"
+        />
 
-
-   </RadioGroup>
-
-</LinearLayout>
+</com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="custom_backgroud" format="reference|color" />
+    <attr name="custom_textcolor" format="reference|color" />
+</resources>

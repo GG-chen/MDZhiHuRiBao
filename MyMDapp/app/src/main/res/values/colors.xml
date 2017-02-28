@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWriter">#AAAAAA</color>
+    <color name="daytheme_background">#f7f7f7</color>
+    <color name="daytheme_textcolor">#525252</color>
+    <color name="nighttheme_background">#1e1e2a</color>
+    <color name="nighttheme_textcolor">#868a96</color>
 </resources>

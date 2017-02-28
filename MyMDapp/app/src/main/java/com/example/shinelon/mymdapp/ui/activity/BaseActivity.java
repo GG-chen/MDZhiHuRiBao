@@ -8,7 +8,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.shinelon.mymdapp.MyApplication;
+import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
+import com.example.shinelon.mymdapp.utils.SPUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,10 +29,18 @@ public class BaseActivity extends AppCompatActivity {
     protected ImageUtils imageUtils;
     protected DisplayMetrics displayMetrics;
     private Date data;
+    public SPUtil spUtil;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        spUtil = MyApplication.getSpUtil();
+        if (spUtil.get("theme", "DayTheme").equals("DayTheme")) {
+
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
         super.onCreate(savedInstanceState);
         TAG_LOG = this.getClass().getName();
         context = this;

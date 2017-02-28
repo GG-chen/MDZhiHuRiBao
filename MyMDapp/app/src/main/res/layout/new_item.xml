@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@android:color/white">
+    android:background="?attr/custom_backgroud"
+    >
     <TextView
         android:id="@+id/before_data"
         android:background="@android:color/holo_blue_dark"
@@ -28,7 +29,8 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:background="?attr/custom_backgroud"
+            android:textColor="?attr/custom_textcolor"
             />
         <ImageView
             android:id="@+id/new_image"
@@ -39,7 +41,11 @@
             android:background="@drawable/ic_new"
             />
     </LinearLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        />
 
 
 </LinearLayout>
