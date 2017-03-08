@@ -1,14 +1,10 @@
 package com.example.shinelon.mymdapp.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.shinelon.mymdapp.modle.bean.NewDetailBean;
-import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
-import com.example.shinelon.mymdapp.modle.http.HomeService;
 import com.example.shinelon.mymdapp.modle.http.NewDetailService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
-import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFrg;
 
 import rx.Observer;
@@ -20,7 +16,7 @@ import rx.schedulers.Schedulers;
  * Created by Shinelon on 2017/2/3.
  */
 
-public class NewDetailpresenter extends BasePretener<HomeFrg> {
+public class NewDetailpresenter extends BasePresenter<HomeFrg> {
 
     private NewDetailService newDetailService;
     public NewDetailpresenter(Context context) {

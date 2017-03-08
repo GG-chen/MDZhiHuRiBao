@@ -23,7 +23,6 @@
 
         <TextView
             android:id="@+id/new_title"
-            android:text="趁着降价赶紧买了，东西比效果图还要惊艳，感觉都还不错"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -38,7 +37,6 @@
             android:layout_margin="10dp"
             android:scaleType="centerCrop"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_new"
             />
     </LinearLayout>
     <ImageView

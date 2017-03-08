@@ -3,6 +3,8 @@ package com.example.shinelon.mymdapp.ui.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,9 @@ import rx.schedulers.Schedulers;
 * */
 
 public class WelcomeActivity extends BaseActivity {
+    public static final int ENTER_TIME = 3000;
+    public static final int LODE_SUCCESS = 1;
+    public static final int LODE_ERROR = 2;
     private ImageView imageView;
     private TextView text;
     private WelcomeBean welcomeBean;
@@ -38,21 +43,15 @@ public class WelcomeActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 1:
+                case LODE_SUCCESS:
                     welcomeBean = (WelcomeBean) msg.obj;
-                    Log.d("main", welcomeBean.getImg());
-                    boolean isSuccess = imageUtils.setImage(imageView, welcomeBean.getImg());
-                    if (!isSuccess) {
-                        showToast("读取图片失败！！");
-                        log("读取图片失败！！");
-                    }
-
+                    imageUtils.setImage(imageView, welcomeBean.getImg());
                     text.setText(welcomeBean.getText());
                     Message message = handler.obtainMessage();
-                    message.what = 2;
-                    handler.sendMessageDelayed(message,1000);
+                    message.what = LODE_ERROR;
+                    handler.sendMessageDelayed(message,ENTER_TIME);
                     break;
-                case 2:
+                case LODE_ERROR:
                     intent2(HomeActivity.class);
                     finish();
                     break;
@@ -81,11 +80,13 @@ public class WelcomeActivity extends BaseActivity {
         super.initView();
         imageView = (ImageView) findViewById(R.id.welcome_view);
         text = (TextView) findViewById(R.id.writer);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale);
+        imageView.startAnimation(animation);
+
     }
 
     public void getData() {
         Log.d("main", "getDate!!");
-        if (MyUtils.isNetworkAvailable(context)) {
             welcomeService.getWelcomeImg(getScreenSize())
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
@@ -99,32 +100,22 @@ public class WelcomeActivity extends BaseActivity {
                         @Override
                         public void onError(Throwable e) {
                             Log.d("main", e.toString());
-
+                            handler.sendEmptyMessageDelayed(LODE_ERROR, ENTER_TIME);
                         }
 
                         @Override
                         public void onNext(WelcomeBean welcomeBean) {
                             Log.d("main", "next!!");
-                            MyApplication my = (MyApplication) getApplication();
-                            my.getDbService().saveWelcome(welcomeBean);
                             sendHandler(welcomeBean);
                         }
 
                     });
-        } else {
-            MyApplication my = (MyApplication) getApplication();
-            WelcomeBean welcomeBean = my.getDbService().queryWelcome();
-            if (welcomeBean != null) {
-                sendHandler(welcomeBean);
-            }
-        }
 
-        handler.sendEmptyMessageDelayed(2, 5000);
     }
 
     private void sendHandler(WelcomeBean welcomeBean) {
         Message message = handler.obtainMessage();
-        message.what = 1;
+        message.what = LODE_SUCCESS;
         message.obj = welcomeBean;
         handler.sendMessage(message);
     }

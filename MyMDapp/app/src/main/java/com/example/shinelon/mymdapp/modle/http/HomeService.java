@@ -1,11 +1,7 @@
 package com.example.shinelon.mymdapp.modle.http;
 
 
-import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
-import com.squareup.okhttp.ResponseBody;
-
-
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;

@@ -1,6 +1,5 @@
 package com.example.shinelon.mymdapp.ui.activity;
 
-import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -12,21 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import com.example.shinelon.mymdapp.MyApplication;
 import com.example.shinelon.mymdapp.R;
-import com.example.shinelon.mymdapp.ui.fragment.BoredFragment;
-import com.example.shinelon.mymdapp.ui.fragment.CompanyFragment;
+import com.example.shinelon.mymdapp.ui.fragment.TuringFragment;
+import com.example.shinelon.mymdapp.ui.fragment.AboutFragment;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFragment;
 import com.example.shinelon.mymdapp.ui.fragment.MovieFragment;
-import com.example.shinelon.mymdapp.ui.fragment.PsychologyFragment;
-import com.example.shinelon.mymdapp.utils.SPUtil;
+import com.example.shinelon.mymdapp.ui.fragment.WelfareFragment;
 import com.example.shinelon.mymdapp.utils.ThemeUIUtil;
 
-import static com.example.shinelon.mymdapp.R.id.home;
-import static com.example.shinelon.mymdapp.R.id.swipe_layout;
-
-public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class HomeActivity extends BaseActivity  {
     public Toolbar actionBarToolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -34,6 +29,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private Button switch_theme;
     private LinearLayout custom_layout;
     private int current = 0;
+    private TextView title;
 
     @Override
     protected void initActivity() {
@@ -46,8 +42,8 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         super.initView();
         setupToolbar();
         setupDrawer();
-        group = (RadioGroup) findViewById(R.id.button_group);
-        group.setOnCheckedChangeListener(this);
+        /*group = (RadioGroup) findViewById(R.id.button_group);
+        group.setOnCheckedChangeListener(this);*/
         selectItem(current);
     }
 
@@ -94,23 +90,23 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 current = 0;
                 break;
             case 1:
-                //日常心理学
-                fragment = new PsychologyFragment();
+                //福利
+                fragment = new WelfareFragment();
                 current = 1;
                 break;
             case 2:
-                //电影日报
+                //每日视频
                 fragment = new MovieFragment();
                 current = 2;
                 break;
             case 3:
-                //不许无聊
-                fragment = new BoredFragment();
+                //图灵机器人
+                fragment = new TuringFragment();
                 current = 3;
                 break;
             case 4:
-                //大公司日报
-                fragment = new CompanyFragment();
+                //关于
+                fragment = new AboutFragment();
                 current = 4;
                 break;
             default:
@@ -147,6 +143,8 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected ActionBar getActionBarToolbar() {
         if (actionBarToolbar == null) {
             actionBarToolbar = (Toolbar) findViewById(R.id.tl_custom);
+            //可以根据这个设置title
+            title = (TextView) findViewById(R.id.toolbar_title);
             if (actionBarToolbar != null) {
                 setSupportActionBar(actionBarToolbar);
             }
@@ -160,22 +158,22 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
+
+    public void onCheckedChanged(View view) {
+        switch (view.getId()) {
             case R.id.home:
                 selectItem(0);
                 break;
-            case R.id.psycology:
+            case R.id.welfare_frag:
                 selectItem(1);
                 break;
             case R.id.moive:
                 selectItem(2);
                 break;
-            case R.id.bored:
+            case R.id.turing:
                 selectItem(3);
                 break;
-            case R.id.company:
+            case R.id.about:
                 selectItem(4);
                 break;
         }

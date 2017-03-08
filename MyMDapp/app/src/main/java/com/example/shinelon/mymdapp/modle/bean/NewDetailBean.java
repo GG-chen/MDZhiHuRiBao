@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import static android.R.id.list;
 
 /**
  * Created by Shinelon on 2017/2/3.

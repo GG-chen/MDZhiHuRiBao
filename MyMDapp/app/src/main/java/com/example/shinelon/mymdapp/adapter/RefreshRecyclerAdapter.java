@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shinelon.mymdapp.R;
-import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
-import com.squareup.okhttp.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;

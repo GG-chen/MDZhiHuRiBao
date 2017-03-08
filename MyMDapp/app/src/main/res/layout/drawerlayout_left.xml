@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navigation_header_container"
     android:background="?attr/custom_backgroud"
-    android:layout_width="350dp"
+    android:layout_width="400dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:orientation="vertical"
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="300dp">
 
         <ImageView
             android:id="@+id/user_bg"
@@ -18,85 +18,145 @@
             android:src="@drawable/user_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_header"
-            android:background="@drawable/user_header"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:src="@drawable/my_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
-   <com.example.shinelon.mymdapp.ui.view.ThemeRadioGroup
-       android:id="@+id/button_group"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_weight="1"
-       >
-       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
-           android:id="@+id/home"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_gravity="center_horizontal"
-           android:text="首页"
-           android:textColor="?attr/custom_textcolor"
-           android:background="?attr/custom_backgroud"
-           android:button="@null"
-           />
-       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
-           android:id="@+id/psycology"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_gravity="center_horizontal"
-           android:text="日常心理学"
-           android:textColor="?attr/custom_textcolor"
-           android:background="?attr/custom_backgroud"
-           android:button="@null"
-           />
-       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
-           android:id="@+id/moive"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_gravity="center_horizontal"
-           android:text="电影日报"
-           android:textColor="?attr/custom_textcolor"
-           android:background="?attr/custom_backgroud"
-           android:button="@null"
-           />
-       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
-           android:id="@+id/bored"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_gravity="center_horizontal"
-           android:text="不许无聊"
-           android:textColor="?attr/custom_textcolor"
-           android:background="?attr/custom_backgroud"
-           android:button="@null"
-           />
-       <com.example.shinelon.mymdapp.ui.view.ThemeRadiobutton
-           android:id="@+id/company"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_gravity="center_horizontal"
-           android:text="大公司日报"
-           android:textColor="?attr/custom_textcolor"
-           android:background="?attr/custom_backgroud"
-           android:button="@null"
-           />
-   </com.example.shinelon.mymdapp.ui.view.ThemeRadioGroup>
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/home"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/main"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="首页"
+            android:textSize="40sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/welfare_frag"
+        android:padding="10dp"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/welfare"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="福利"
+            android:textSize="40sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/moive"
+        android:padding="10dp"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/moive"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="每日视频"
+            android:textSize="40sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/turing"
+        android:padding="10dp"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/turing"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="图灵机器人"
+            android:textSize="40sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/about"
+        android:padding="10dp"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/about"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="关于"
+            android:textSize="40sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeButton
         android:id="@+id/switch_theme"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:text="切换模式"
-        android:textSize="15sp"
+        android:textSize="30sp"
         android:textColor="?attr/custom_textcolor"
         android:background="?attr/custom_backgroud"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
         />
 
 </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>

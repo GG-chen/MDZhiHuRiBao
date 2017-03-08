@@ -5,6 +5,10 @@ import android.util.Log;
 
 
 import com.example.shinelon.mymdapp.MyApplication;
+import com.example.shinelon.mymdapp.TuringParams;
+import com.example.shinelon.mymdapp.modle.http.MovieService;
+import com.example.shinelon.mymdapp.modle.http.TuringService;
+import com.example.shinelon.mymdapp.modle.http.WelfareService;
 import com.example.shinelon.mymdapp.utils.MyUtils;
 
 import java.io.File;
@@ -29,6 +33,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtils {
     public static Retrofit retrofit;
+    public static WelfareService welfareService;
+    public static MovieService movieService;
+    public static TuringService turingService;
     private static File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "cache");
     private static final Interceptor INTERCEPTOR = new Interceptor() {
         @Override
@@ -73,6 +80,7 @@ public class RetrofitUtils {
             .build();
 
 
+
     public static <T> T createApi(Context context, Class<T> clazz) {
         if (retrofit == null) {
             synchronized (RetrofitUtils.class) {
@@ -83,6 +91,17 @@ public class RetrofitUtils {
                             .client(client)
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
                     retrofit = builder.build();
+                   // retrofit.create(clazz);
+                    builder.baseUrl("http://gank.io/api/data/福利/");
+                    Retrofit gank = builder.build();
+                    welfareService = gank.create(WelfareService.class);
+                    builder.baseUrl("http://gank.io/api/data/休息视频/");
+                    Retrofit moiveGank = builder.build();
+                    movieService = moiveGank.create(MovieService.class);
+                    builder.baseUrl(TuringParams.TULING_URL);
+                    Retrofit turing = builder.build();
+                    turingService = turing.create(TuringService.class);
+
                 }
             }
         }

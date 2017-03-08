@@ -2,28 +2,23 @@ package com.example.shinelon.mymdapp.presenter;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.shinelon.mymdapp.MyApplication;
-import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.HomeService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
 import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFrg;
-import com.example.shinelon.mymdapp.utils.MyUtils;
-import com.google.gson.Gson;
-import java.util.List;
+
 import rx.Observer;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by Shinelon on 2017/1/31.
  */
 
-public class HomePresenter extends BasePretener<HomeFrg> {
+public class HomePresenter extends BasePresenter<HomeFrg> {
 
     private final MyApplication my;
     private HomeService homeService;

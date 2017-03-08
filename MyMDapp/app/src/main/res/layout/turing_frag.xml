@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/custom_backgroud"
+    >
+    <ListView
+        android:layout_marginTop="120dp"
+        android:id="@+id/turing_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        ></ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <EditText
+            android:id="@+id/edit_context"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/send_msg"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/send"
+            android:scaleType="center"
+            />
+    </LinearLayout>
+
+</com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>

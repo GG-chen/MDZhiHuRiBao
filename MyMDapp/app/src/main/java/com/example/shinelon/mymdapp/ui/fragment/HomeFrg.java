@@ -1,7 +1,6 @@
 package com.example.shinelon.mymdapp.ui.fragment;
 
 import com.example.shinelon.mymdapp.modle.bean.NewDetailBean;
-import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 
 /**

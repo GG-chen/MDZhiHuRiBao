@@ -13,4 +13,5 @@ import rx.Observable;
 public interface WelcomeService {
     @GET("4/start-image/{IMG_SIZE}")
     Observable<WelcomeBean> getWelcomeImg(@Path("IMG_SIZE") String size);
+
 }

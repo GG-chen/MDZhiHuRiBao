@@ -16,12 +16,10 @@ import android.widget.TextView;
 
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.bean.NewDetailBean;
-import com.example.shinelon.mymdapp.modle.bean.NewItemBean;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.presenter.NewDetailpresenter;
 import com.example.shinelon.mymdapp.ui.activity.BaseToolBarActivity;
-import com.example.shinelon.mymdapp.ui.activity.NewDetailActivity;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
