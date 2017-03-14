@@ -28,27 +28,31 @@ public abstract class BaseFragment extends Fragment {
     protected Context context;
     protected View view;
     protected MyApplication my;
+    public Boolean isAdd = false;
 
 
     @Override
     public void onAttach(Context context) {
+        log("onAttach");
         super.onAttach(context);
         this.context = context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        log("onCreate");
         super.onCreate(savedInstanceState);
         TAG_LOG = this.getClass().getName();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        log("onCreateView");
         if (getCurrentLayoutId() != 0) {
-            Log.d(TAG_LOG, "找到Fragment！ ");
+            log("找到Fragment！ ");
             return inflater.inflate(getCurrentLayoutId(), null);
         } else {
-            Log.d(TAG_LOG, "没有找到Fragment！ ");
+            log("没有找到Fragment！ ");
             return super.onCreateView(inflater, container, savedInstanceState);
         }
     }
@@ -56,6 +60,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        log("onViewCreated");
         this.view = view;
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this,view);
@@ -70,5 +75,40 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         ButterKnife.reset(this);
         super.onDestroy();
+        log("onDestroy");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        log("onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        log("onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        log("onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        log("onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        log("onDetach");
+    }
+
+    protected void log(String msg) {
+        Log.d(TAG_LOG, msg);
     }
 }

@@ -49,4 +49,6 @@ dependencies {
     compile 'com.github.lguipeng:BubbleView:1.0.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.meikoz:slipviewpager:1.0.2'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+
 }

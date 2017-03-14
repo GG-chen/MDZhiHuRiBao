@@ -59,8 +59,8 @@ public class MyUtils {
         return dm;
     }
 
-    public static float dp2px(Context context, float dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+    public static int dp2px(Context context, float dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.getResources().getDisplayMetrics());
     }
 

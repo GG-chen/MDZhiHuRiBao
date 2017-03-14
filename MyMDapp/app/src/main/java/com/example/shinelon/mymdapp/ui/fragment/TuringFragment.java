@@ -1,7 +1,12 @@
 package com.example.shinelon.mymdapp.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,19 +45,22 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
             adapter.notifyDataSetChanged();
         }
     };
+    private static boolean isFirst = true;
 
     @Override
     protected void initFragment() {
-        initData();
         initView();
-
-
+        if (isFirst) {
+            initData();
+            isFirst = false;
+        }
     }
 
     private void initData() {
         TuringBean bean = new TuringBean();
         bean.setText("你好呀  :)  ");
         bean.setType(TuringParams.TYPE_LEFT);
+        bean.setCode(TuringParams.TulingCode.TEXT);
         list.add(bean);
     }
 
@@ -63,6 +71,13 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
         adapter = new TuringAdapter(list, context);
         listView.setAdapter(adapter);
         send.setOnClickListener(this);
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MyUtils.hideKeyboard((HomeActivity)context);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -84,7 +99,7 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
             handler.sendEmptyMessage(0);
         } else {
             TuringBean errorBean = new TuringBean();
-            errorBean.setText("抱歉，我生病了，不能陪小朱聊天了...");
+            errorBean.setText("抱歉，我生病了，不能陪小主聊天了...");
             errorBean.setType(TuringParams.TYPE_LEFT);
             list.add(errorBean);
             handler.sendEmptyMessage(0);

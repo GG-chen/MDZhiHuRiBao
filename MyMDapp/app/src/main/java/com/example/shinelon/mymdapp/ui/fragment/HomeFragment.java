@@ -2,9 +2,6 @@ package com.example.shinelon.mymdapp.ui.fragment;
 
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,9 +21,11 @@ import com.example.shinelon.mymdapp.ui.view.WrapRecyclerView;
 import com.example.shinelon.mymdapp.modle.bean.NewsListBean;
 import com.example.shinelon.mymdapp.presenter.HomePresenter;
 import com.example.shinelon.mymdapp.ui.view.MySwipeRefreshLayout;
+import com.example.shinelon.mymdapp.utils.MyUtils;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.InjectView;
 
@@ -39,7 +38,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     private NewsListBean newsListBean;
     private HomePresenter homePresenter;
     private HomeActivity home;
-    private ArrayList<NewsListBean.TopStoried> list = new ArrayList<>();
+    private List<NewsListBean.TopStoried> list = new ArrayList<>();
     @InjectView(R.id.list_view)
     WrapRecyclerView recyclerView;
     @InjectView(R.id.swipe_layout)
@@ -55,20 +54,20 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     @Override
     protected void initFragment() {
         initRecyclerView();
+        setupSwipe();
         setupPager();
         loadNewData();
-        setupSwipe();
 
 
     }
 
     private void initRecyclerView() {
         home = (HomeActivity) getActivity();
+        homePresenter = new HomePresenter(context);
+        homePresenter.attachView(this);
         manager = new LinearLayoutManager(context) ;
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
-        homePresenter = new HomePresenter(context);
-        homePresenter.attachView(this);
         adapter = new RefreshRecyclerAdapter(context);
         adapter.setOnItemClickListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -81,7 +80,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
                     int pastVisibleItems = manager.findFirstVisibleItemPosition();
                     if (!isLoading && (visibleItemCount + pastVisibleItems + 3) >= totalItemCount) {
                         isLoading = true;
-                        Log.d("onScrolled", "start loading!!");
+                        log("onScrolled");
                         homePresenter.loadNewsList(needLodeDate);
                         adapter.startLoding();
                     }
@@ -97,18 +96,18 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     }
 
     private void loadNewData() {
-        Log.d("TEST！！", "loadNewData: ");
+        log("loadNewData");
         needLodeDate = home.getCurrentData();
         homePresenter.loadLastNewsList();
     }
 
     private void setupPager() {
          swipeViewPager = new SwipeViewPager(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MyUtils.dp2px(context,(float)300));
         swipeViewPager.setLayoutParams(params);
-        customViewPager = new CustomViewPager(context, list);
         //初始化 轮播图指示点
         swipeViewPager.updateIndicatorView(VIEWPAGER_COUNT);
+        customViewPager = new CustomViewPager(context, list);
         swipeViewPager.setAdapter(customViewPager);
        //广告图开启滚动功能
         swipeViewPager.startScorll();
@@ -121,7 +120,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d(TAG_LOG, "onRefresh!! ");
+                log("onRefresh!! ");
                 newsListBean = null;
                 notifyDataHasChanged();
                 loadNewData();
@@ -146,14 +145,14 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     public void refresh(NewsListBean data) {
 
         if (data != null) {
+            log("refresh!!");
+            list.clear();
             newsListBean = data;
-            Log.d(TAG_LOG, "get the data!!" + data.getStories().get(0).getTitle());
-            Log.d(TAG_LOG, "get the data!!" + data.getTop_stories().get(0).getTitle());
             adapter.addItem(newsListBean.getStories());
             list.addAll(newsListBean.getTop_stories());
+            customViewPager.addList(newsListBean.getTop_stories());
             VIEWPAGER_COUNT = newsListBean.getTop_stories().size();
             homePresenter.loadNewsList(needLodeDate);
-            Log.d(TAG_LOG, "结束!!");
             notifyDataHasChanged();
 
         }
@@ -162,7 +161,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     }
 
     private void notifyDataHasChanged() {
-        customViewPager.notifyDataSetChanged();
+        //customViewPager.notifyDataSetChanged();
         adapter.notifyDataSetChanged();
     }
 

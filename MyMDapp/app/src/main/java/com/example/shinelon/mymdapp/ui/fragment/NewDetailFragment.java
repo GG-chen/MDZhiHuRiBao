@@ -76,14 +76,12 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
                 }
             });
         }
-        Log.d("DetailNew", "initFrg");
         loadData();
         initView();
 
     }
 
     private void initView() {
-        Log.d("DetailNew", "initView");
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -95,12 +93,10 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
     }
 
     private void setupData(CharSequence body) {
-        Log.d("DetailNew", bean.getTitle());
         collapsingToolbar.setTitle(bean.getTitle());
         //author.setText(bean.getAuthor().getName());
         ImageUtils.getInstance().setImage(imageView,  bean.getImage());
         tv_content.setText(body);
-        tv_content.setTextSize(20);
     }
 
     private void loadData() {
@@ -134,7 +130,6 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
 
     @Override
     public void loadNewDetail(NewDetailBean data) {
-        Log.d("DetailNew", "loadNewDetail");
         bean = data;
         readHtml();
 

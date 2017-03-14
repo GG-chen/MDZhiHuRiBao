@@ -18,6 +18,9 @@ public class NewsListBean {
     @SerializedName("top_stories")
     private List<TopStoried> top_stories;
 
+    public NewsListBean() {
+    }
+
     public String getDate() {
         return date;
     }
@@ -128,6 +131,12 @@ public class NewsListBean {
         @SerializedName("type")
         private int type;
         private String date ;
+
+        public TopStoried(String title, String images, int id) {
+            this.title = title;
+            this.images = images;
+            this.id = id;
+        }
 
         public String getDate() {
             return date;

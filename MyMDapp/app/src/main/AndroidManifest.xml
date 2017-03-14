@@ -6,15 +6,15 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/freedom"
         android:label="@string/app_name"
         android:supportsRtl="true"
         tools:replace="android:icon"
         android:screenOrientation="portrait"
-
         >
         <activity
             android:name=".ui.activity.WelcomeActivity"
@@ -26,8 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".ui.activity.HomeActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity android:name=".ui.activity.NewDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.activity.JuheDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"  android:hardwareAccelerated="true" ></activity>
         <activity android:name=".ui.activity.WelfareDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 

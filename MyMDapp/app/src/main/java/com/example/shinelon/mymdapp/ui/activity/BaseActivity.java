@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.ButterKnife;
+
 
 /**
  * Created by Shinelon on 2017/1/31.
@@ -36,25 +38,20 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         spUtil = MyApplication.getSpUtil();
         if (spUtil.get("theme", "DayTheme").equals("DayTheme")) {
-
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
         }
         super.onCreate(savedInstanceState);
+        Log.d("onCreate", " its me !!!");
         TAG_LOG = this.getClass().getName();
         context = this;
+        imageUtils = ImageUtils.getInstance();
+        imageUtils.setContext(context);
         initActivity();
         initView();
         initData();
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        imageUtils = ImageUtils.getInstance();
-        imageUtils.setContext(context);
     }
 
     protected void intent2(Class clazz) {

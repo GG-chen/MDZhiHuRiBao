@@ -3,9 +3,14 @@ package com.example.shinelon.mymdapp.ui.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -61,55 +66,61 @@ public class WelcomeActivity extends BaseActivity {
 
         }
     };
+    private RelativeLayout wel_relative;
 
 
     @Override
     protected void initActivity() {
-        super.initActivity();
         setContentView(R.layout.splash_layout);
     }
 
     @Override
     protected void initData() {
-        super.initData();
-        welcomeService = RetrofitUtils.createApi(this,WelcomeService.class);
+        //welcomeService = RetrofitUtils.createApi(this,WelcomeService.class);
         getData();
     }
-
+    @Override
     protected void initView() {
-        super.initView();
+        Log.d("initView", "initView: its me !!!");
         imageView = (ImageView) findViewById(R.id.welcome_view);
         text = (TextView) findViewById(R.id.writer);
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.scale);
-        imageView.startAnimation(animation);
+        wel_relative = (RelativeLayout) findViewById(R.id.wel_relative);
+        AnimationSet set = new AnimationSet(true);
+        AlphaAnimation scaleAnimation = new AlphaAnimation(0.5f,1.0f);
+        scaleAnimation.setDuration(1000);
+        set.addAnimation(scaleAnimation);
+        set.setFillAfter(true);
+        wel_relative.startAnimation(set);
+
 
     }
 
     public void getData() {
-        Log.d("main", "getDate!!");
-            welcomeService.getWelcomeImg(getScreenSize())
+        Log.d("WelcomeActivity", "getDate!!");
+           /* welcomeService.getWelcomeImg(getScreenSize())
                     .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                    .observeOn(Schedulers.immediate())
                     .subscribe(new Observer<WelcomeBean>() {
                         @Override
                         public void onCompleted() {
-                            Log.d("main", "onCompleted!!");
+                            Log.d("WelcomeActivity", "onCompleted!!");
 
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.d("main", e.toString());
+                            Log.d("WelcomeActivity", e.toString());
                             handler.sendEmptyMessageDelayed(LODE_ERROR, ENTER_TIME);
                         }
 
                         @Override
                         public void onNext(WelcomeBean welcomeBean) {
-                            Log.d("main", "next!!");
+                            Log.d("WelcomeActivity", "next!!");
                             sendHandler(welcomeBean);
                         }
 
-                    });
+                    });*/
+        handler.sendEmptyMessageDelayed(LODE_ERROR, ENTER_TIME);
 
     }
 

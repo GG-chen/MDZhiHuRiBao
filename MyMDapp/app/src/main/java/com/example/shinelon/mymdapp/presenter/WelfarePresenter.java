@@ -27,7 +27,7 @@ public class WelfarePresenter extends BasePresenter<WelfareFrg> {
 
     public void loadWelfare(String count) {
         Log.d("WelfareFragment", "loadWelfare");
-        Subscription subscription = welfareService.loadWelfare(count)
+        welfareService.loadWelfare(count)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .subscribe(new Observer<WelfareBean>() {
@@ -43,7 +43,7 @@ public class WelfarePresenter extends BasePresenter<WelfareFrg> {
 
                     @Override
                     public void onNext(WelfareBean welfareBean) {
-                        Log.d("WelfareFragment", "onNext");
+                        Log.d("WelfareFragment", "onNext" + welfareBean.getResults().get(0).getDesc());
                       mMvpView.loadMore(welfareBean);
                     }
                 });

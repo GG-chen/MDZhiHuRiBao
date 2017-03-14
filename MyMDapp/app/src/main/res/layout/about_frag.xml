@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:paddingTop="300dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="30dp"

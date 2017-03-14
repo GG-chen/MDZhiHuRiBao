@@ -3,19 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navigation_header_container"
     android:background="?attr/custom_backgroud"
-    android:layout_width="400dp"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:orientation="vertical"
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:clickable="true"
+        >
 
         <ImageView
             android:id="@+id/user_bg"
             android:scaleType="centerCrop"
-            android:src="@drawable/user_bg"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <de.hdodenhof.circleimageview.CircleImageView
@@ -28,135 +31,150 @@
     </RelativeLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/home"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
         android:onClick="onCheckedChanged"
         >
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_margin="20dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/main"
+            android:layout_height="30dp"
+            android:src="@drawable/main"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="首页"
-            android:textSize="40sp"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
             android:textColor="?attr/custom_textcolor"
             android:gravity="center"
             />
     </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/welfare_frag"
-        android:padding="10dp"
         android:onClick="onCheckedChanged"
         >
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_margin="20dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/welfare"
+            android:layout_height="30dp"
+            android:src="@drawable/welfare"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="福利"
-            android:textSize="40sp"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
             android:textColor="?attr/custom_textcolor"
             android:gravity="center"
             />
     </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/moive"
-        android:padding="10dp"
         android:onClick="onCheckedChanged"
         >
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_margin="20dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/moive"
+            android:layout_height="30dp"
+            android:src="@drawable/top_new"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="每日视频"
-            android:textSize="40sp"
+            android:text="每日头条"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
             android:textColor="?attr/custom_textcolor"
             android:gravity="center"
             />
     </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/turing"
-        android:padding="10dp"
         android:onClick="onCheckedChanged"
         >
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_margin="20dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/turing"
+            android:layout_height="30dp"
+            android:src="@drawable/turing"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:text="图灵机器人"
-            android:textSize="40sp"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
             android:textColor="?attr/custom_textcolor"
             android:gravity="center"
             />
     </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
     <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/about"
-        android:padding="10dp"
         android:onClick="onCheckedChanged"
         >
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_margin="20dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/about"
+            android:layout_height="30dp"
+            android:src="@drawable/about"
             />
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
             android:text="关于"
-            android:textSize="40sp"
+            android:textSize="20sp"
             android:textColor="?attr/custom_textcolor"
             android:gravity="center"
             />
     </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
-    <com.example.shinelon.mymdapp.ui.view.ThemeButton
-        android:id="@+id/switch_theme"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:text="切换模式"
-        android:textSize="30sp"
-        android:textColor="?attr/custom_textcolor"
-        android:background="?attr/custom_backgroud"
-        />
-    <ImageView
+    <com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clickable="true"
-        />
+        android:id="@+id/switch_theme"
+        android:onClick="onCheckedChanged"
+        >
+        <ImageView
+            android:id="@+id/theme_loge"
+            android:layout_width="30dp"
+            android:layout_margin="20dp"
+            android:layout_height="30dp"
+            android:background="@drawable/sun"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:text="切换模式"
+            android:textSize="20sp"
+            android:textColor="?attr/custom_textcolor"
+            android:gravity="center"
+            />
+    </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>
+
+
 
 </com.example.shinelon.mymdapp.ui.view.ThemeLinearLayout>

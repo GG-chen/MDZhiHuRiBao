@@ -22,24 +22,6 @@ public class MySwipeRefreshLayout extends SwipeRefreshLayout {
     }
 
 
-
-    /*@Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        Log.d("Layout", "onScrollChanged!! ");
-        super.onScrollChanged(l, t, oldl, oldt);
-        if (scrollChangeListener != null) {
-            scrollChangeListener.setSrollChanged(l, t, oldl, oldt);
-        }
-    }
-    private ScrollChangeListener scrollChangeListener;
-    public void setScrollChangeListener(ScrollChangeListener scrollChangeListener) {
-        this.scrollChangeListener = scrollChangeListener;
-    }
-
-    public interface ScrollChangeListener {
-        void setSrollChanged(int l, int t, int oldl, int oldt);
-    }*/
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return super.onInterceptTouchEvent(ev);

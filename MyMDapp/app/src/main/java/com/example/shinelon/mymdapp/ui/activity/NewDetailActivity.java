@@ -26,7 +26,6 @@ public class NewDetailActivity extends BaseToolBarActivity{
 
     @Override
     protected void initActivity() {
-        super.initActivity();
         setContentView(R.layout.detail_new_layout);
     }
 
