@@ -2,6 +2,8 @@ package com.example.shinelon.mymdapp.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +35,13 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
     private StaggeredGridLayoutManager manager;
     private boolean loding = true;
     private int mPage = 1;
-
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            adapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void initFragment() {
@@ -95,6 +103,7 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
         loding = false;
         if (bean != null) {
             adapter.addItem(bean.getResults());
+            handler.sendEmptyMessage(0);
         }
     }
 

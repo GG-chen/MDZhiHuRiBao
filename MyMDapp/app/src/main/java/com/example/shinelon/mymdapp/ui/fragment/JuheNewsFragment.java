@@ -2,6 +2,8 @@ package com.example.shinelon.mymdapp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,14 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
     @InjectView(R.id.juhe_swipe_layout)
     public SwipeRefreshLayout swipeRefreshLayout;
     private JuhePresenter presenter;
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            newsAdapter.notifyDataSetChanged();
+            Log.d("JuheFragment", "setData: 44444444444" + type);
+        }
+    };
 
     public static JuheNewsFragment newInstance(String type) {
         Bundle args = new Bundle();
@@ -53,6 +63,7 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
     }
 
     private void initData() {
+        Log.d("JuheNewsFragment", "initData: ");
         newsAdapter = new JuheTypeAdapter();
         newsAdapter.setOnItemClickListener(this);
         presenter = new JuhePresenter(context);
@@ -80,8 +91,10 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
     @Override
     public void loadData(JuheBean bean) {
         if (bean != null) {
+            Log.d("JuheNewsFragment", "loadData: ");
             newsAdapter.setData(bean.getResult().getData());
             swipeRefreshLayout.setRefreshing(false);
+            handler.sendEmptyMessage(0);
         }
     }
 

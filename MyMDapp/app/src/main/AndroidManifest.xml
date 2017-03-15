@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         tools:replace="android:icon"
         android:screenOrientation="portrait"
+        android:hardwareAccelerated="false"
         >
         <activity
             android:name=".ui.activity.WelcomeActivity"
@@ -26,7 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ui.activity.HomeActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"  >
+
         </activity>
         <activity android:name=".ui.activity.NewDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ui.activity.JuheDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"  android:hardwareAccelerated="true" ></activity>

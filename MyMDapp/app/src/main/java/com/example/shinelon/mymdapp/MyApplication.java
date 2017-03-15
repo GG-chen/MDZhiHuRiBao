@@ -26,4 +26,5 @@ public class MyApplication extends Application {
     public static SPUtil getSpUtil() {
         return spUtil;
     }
+
 }

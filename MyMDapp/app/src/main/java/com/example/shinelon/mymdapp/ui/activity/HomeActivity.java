@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.shinelon.mymdapp.MyApplication;
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.ui.fragment.JuheFragment;

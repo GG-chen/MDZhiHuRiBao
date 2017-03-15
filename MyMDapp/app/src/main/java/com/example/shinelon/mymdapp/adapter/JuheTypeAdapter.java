@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.bean.JuheBean;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +24,7 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
     private static final int NOMAL_ITEM = 1;
     private static final int LODING_ITEM = 0;
     private Context context;
-    private List<JuheBean.JuheResult.JuHeItem> items;
+    private List<JuheBean.JuheResult.JuHeItem> items = new ArrayList<JuheBean.JuheResult.JuHeItem>();
 
     public JuheTypeAdapter() {
     }
@@ -47,6 +49,7 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
 
     @Override
     public void onBindViewHolder(JuheTypeAdapter.MyViewHolder holder, int position) {
+        Log.d("JuheFragment", "onBindViewHolder:11111111 " + items.get(0).getCategory());
         int type = getItemViewType(position);
         if (type == NOMAL_ITEM) {
             onBindNomalItem(holder, position);
@@ -103,9 +106,13 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
         }
     }
     public void setData(List<JuheBean.JuheResult.JuHeItem> items) {
-        Log.d("JuheFragment", "setData: " + items.get(0).getCategory());
-        this.items = items;
-        notifyDataSetChanged();
+        Log.d("JuheFragment", "setData:11111111 " + items.get(0).getCategory());
+        this.items.clear();
+        Log.d("JuheFragment", "setData: 22222222" + items.get(0).getCategory());
+        this.items.addAll(items);
+        Log.d("JuheFragment", "setData: 33333333333" + items.get(0).getCategory());
+       // notifyDataSetChanged();
+
     }
 
     public void setOnItemClickListener(OnViewItemClickListener listener) {

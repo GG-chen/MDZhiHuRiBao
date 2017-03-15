@@ -2,6 +2,7 @@ package com.example.shinelon.mymdapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,11 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.WelfareH
 
     public void addItem(List<WelfareBean.WelfareItem> item) {
         if (item != null) {
+            list.clear();
             list.addAll(item);
         }
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
+        Log.d("WelfareAdapter", "addItem: ");
 
     }
 
