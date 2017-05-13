@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.shinelon.mymdapp.MyApplication;
 import com.example.shinelon.mymdapp.TuringParams;
+import com.example.shinelon.mymdapp.modle.http.HomeService;
 import com.example.shinelon.mymdapp.modle.http.JuheService;
 import com.example.shinelon.mymdapp.modle.http.TuringService;
 import com.example.shinelon.mymdapp.modle.http.WelfareService;
@@ -36,6 +37,7 @@ public class RetrofitUtils {
     public static WelfareService welfareService;
     public static JuheService juheService;
     public static TuringService turingService;
+    public static HomeService homeService;
     private static File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "cache");
     private static final Interceptor INTERCEPTOR = new Interceptor() {
         @Override
@@ -94,6 +96,9 @@ public class RetrofitUtils {
                     builder.baseUrl("http://gank.io/api/data/福利/");
                     Retrofit gank = builder.build();
                     welfareService = gank.create(WelfareService.class);
+                    builder.baseUrl("http://news-at.zhihu.com/api/");
+                    Retrofit home = builder.build();
+                    homeService = gank.create(HomeService.class);
                     builder.baseUrl("http://v.juhe.cn/toutiao/");
                     Retrofit juhe = builder.build();
                     juheService = juhe.create(JuheService.class);

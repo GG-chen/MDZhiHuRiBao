@@ -8,6 +8,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Shinelon on 2017/3/4.
@@ -17,6 +18,7 @@ public class BitmapSaveUtil {
     private final String dir;
     public static BitmapSaveUtil saveUtil;
     private Context context;
+    private String local_file;
 
     public BitmapSaveUtil(Context context) {
         this.context = context;
@@ -37,11 +39,31 @@ public class BitmapSaveUtil {
             return false;
         }
         try {
-            File file = new File(dir + name + ".jpg");
-            if (file.exists()) {
-                file.delete();
+            File f = new File(dir);
+
+            if(!f.exists()){
+
+                f.mkdirs();
+
             }
-            file.createNewFile();
+
+            local_file = f.getAbsolutePath()+"/"+ name + ".jpg";
+
+            File file = new File(local_file);
+
+            try {
+
+                if(!file.createNewFile()) {
+
+                    System.out.println("File already exists");
+
+                }
+
+            } catch (IOException ex) {
+
+                System.out.println(ex);
+
+            }
             FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
@@ -63,4 +85,7 @@ public class BitmapSaveUtil {
         return false;
     }
 
+    public String getLocal_file() {
+        return local_file;
+    }
 }

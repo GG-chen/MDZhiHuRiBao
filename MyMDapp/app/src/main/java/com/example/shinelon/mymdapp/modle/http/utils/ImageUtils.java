@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.shinelon.mymdapp.R;
 
 import java.util.concurrent.ExecutionException;
 
@@ -43,7 +45,7 @@ public class ImageUtils {
             Log.d("ImageUtil" , "没有context或者url");
             return false;
         }
-        Glide.with(context).load(url).into(v);
+        Glide.with(context).load(url).error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.ALL).into(v);
         return true;
 
     }

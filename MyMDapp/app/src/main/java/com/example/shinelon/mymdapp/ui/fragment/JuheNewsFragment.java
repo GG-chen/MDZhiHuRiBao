@@ -37,7 +37,6 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             newsAdapter.notifyDataSetChanged();
-            Log.d("JuheFragment", "setData: 44444444444" + type);
         }
     };
 

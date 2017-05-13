@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -74,12 +75,12 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
         recyclerView.addOnScrollListener(getOnBottomListener(manager));
         adapter.setOnTouchListener(this);
     }
-    RecyclerView.OnScrollListener getOnBottomListener(final StaggeredGridLayoutManager layoutManager) {
+    OnScrollListener getOnBottomListener(final StaggeredGridLayoutManager layoutManager) {
         return new RecyclerView.OnScrollListener() {
             @Override public void onScrolled(RecyclerView rv, int dx, int dy) {
                 boolean isBottom =
                         layoutManager.findLastCompletelyVisibleItemPositions(new int[2])[1] >=
-                                adapter.getItemCount() - 6;
+                                adapter.getItemCount() - 8;
                 if (isBottom) {
                     if (!loding) {
                         mPage += 1;
@@ -87,6 +88,16 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
                         presenter.loadWelfare(String.valueOf(mPage));
                     }
                 }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState != 2) {
+                    adapter.setScoll(false);
+                } else {
+                    adapter.setScoll(true);
+                }
+                super.onScrollStateChanged(recyclerView, newState);
             }
         };
     }
@@ -99,7 +110,7 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
 
     @Override
     public void loadMore(WelfareBean bean) {
-        log("WelfareFragment   loadMore" + bean.getResults().get(2).getImageUrl());
+        log("WelfareFragment   loadMore" + mPage);
         loding = false;
         if (bean != null) {
             adapter.addItem(bean.getResults());

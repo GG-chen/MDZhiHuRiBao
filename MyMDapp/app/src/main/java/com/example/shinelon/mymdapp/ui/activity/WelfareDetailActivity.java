@@ -53,7 +53,7 @@ public class WelfareDetailActivity extends BaseActivity implements View.OnClickL
         imageView.setDrawingCacheEnabled(false);
         Boolean isSuccess = saveUtil.saveBitmap(obmp, name);
         if (isSuccess) {
-            Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "保存成功" + saveUtil.getLocal_file(), Toast.LENGTH_SHORT).show();
             download.setVisibility(View.INVISIBLE);
         } else {
             Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();

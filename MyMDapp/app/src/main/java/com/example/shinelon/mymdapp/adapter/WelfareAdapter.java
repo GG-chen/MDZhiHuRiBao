@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.shinelon.mymdapp.MyApplication;
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.bean.WelfareBean;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
@@ -23,7 +22,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.WelfareH
     private List<WelfareBean.WelfareItem> list = new ArrayList<>();
     private Context context;
     private OnItemTouch onItemTouch;
-
+    private Boolean isScroll = false;
 
     public WelfareAdapter(List<WelfareBean.WelfareItem> list, Context context) {
         this.list = list;
@@ -44,7 +43,9 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.WelfareH
                 onItemTouch.onTouch(v, list.get(position).getImageUrl(), list.get(position).getDesc());
             }
         });
-        ImageUtils.getInstance().setImage(holder.imageView, list.get(position).getImageUrl());
+        if (!isScroll) {
+            ImageUtils.getInstance().setImage(holder.imageView, list.get(position).getImageUrl());
+        }
     }
 
     @Override
@@ -63,12 +64,21 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.WelfareH
 
     public void addItem(List<WelfareBean.WelfareItem> item) {
         if (item != null) {
-            list.clear();
+           // list.clear();
             list.addAll(item);
         }
         //notifyDataSetChanged();
         Log.d("WelfareAdapter", "addItem: ");
 
+    }
+
+    public Boolean getScoll() {
+        return isScroll;
+    }
+
+    public void setScoll(Boolean scroll) {
+        if (scroll != isScroll)
+        isScroll = scroll;
     }
 
     public void setOnTouchListener(OnItemTouch onTouchListener) {
