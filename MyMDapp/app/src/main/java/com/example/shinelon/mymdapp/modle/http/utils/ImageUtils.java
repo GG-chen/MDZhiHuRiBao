@@ -45,7 +45,11 @@ public class ImageUtils {
             Log.d("ImageUtil" , "没有context或者url");
             return false;
         }
-        Glide.with(context).load(url).error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.ALL).into(v);
+        try {
+            Glide.with(context).load(url).error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.ALL).into(v);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
 
     }

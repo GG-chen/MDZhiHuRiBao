@@ -38,10 +38,12 @@ public class WelcomeActivity extends BaseActivity {
     public static final int ENTER_TIME = 3000;
     public static final int LODE_SUCCESS = 1;
     public static final int LODE_ERROR = 2;
+    public static final int ENTER_MAIN = 3;
     private ImageView imageView;
     private TextView text;
     private WelcomeBean welcomeBean;
     private WelcomeService welcomeService;
+
 
 
     Handler handler = new Handler() {
@@ -53,10 +55,16 @@ public class WelcomeActivity extends BaseActivity {
                     welcomeBean = (WelcomeBean) msg.obj;
                     imageUtils.setImage(imageView, welcomeBean.getCreatives().get(0).getUrl());
                     Message message = handler.obtainMessage();
-                    message.what = LODE_ERROR;
+                    message.what = ENTER_MAIN;
                     handler.sendMessageDelayed(message,ENTER_TIME);
                     break;
                 case LODE_ERROR:
+                    imageView.setImageResource(R.drawable.welcome);
+                    Message messageerror = handler.obtainMessage();
+                    messageerror.what = ENTER_MAIN;
+                    handler.sendMessageDelayed(messageerror,ENTER_TIME);
+                    break;
+                case ENTER_MAIN:
                     intent2(HomeActivity.class);
                     finish();
                     break;

@@ -2,6 +2,7 @@ package com.example.shinelon.mymdapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.ui.activity.NewDetailActivity;
 import com.example.shinelon.mymdapp.ui.fragment.HomeFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 public class CustomViewPager extends PagerAdapter {
-    public static List<NewsListBean.TopStoried> list = new ArrayList<>();
+    public static List<NewsListBean.TopStoried> list ;
     private Context context;
 
     public CustomViewPager(Context context, List<NewsListBean.TopStoried> list) {
@@ -48,9 +48,8 @@ public class CustomViewPager extends PagerAdapter {
             position = 0;
         }
         Log.d("CustomViewPager", "instantiateItem: position: " + position);
-        Log.d("CustomViewPager", "instantiateItem: list.size: " + list.size());
-        View item = View.inflate(context, R.layout.header_item, null);
-
+        final View item = View.inflate(context, R.layout.header_item, null);
+        item.setTag(list.get(position).getId());
         ImageView imageView = (ImageView) item.findViewById(R.id.header_img);
         TextView title = (TextView) item.findViewById(R.id.header_text);
         try {
@@ -60,12 +59,13 @@ public class CustomViewPager extends PagerAdapter {
         } catch (Exception e) {
             e.toString();
         }
-        final int finalPosition = position;
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewDetailActivity.class);
-                intent.putExtra("newId", list.get(finalPosition).getId());
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", (Integer) item.getTag());
+                intent.putExtra("bundle", bundle);
                 context.startActivity(intent);
             }
         });
@@ -83,7 +83,6 @@ public class CustomViewPager extends PagerAdapter {
         if (list != null) {
             list.clear();
             this.list = item;
-            Log.d("CustomViewPager", "addList: " + list.size());
             list.notify();
         }
         //notifyDataSetChanged();

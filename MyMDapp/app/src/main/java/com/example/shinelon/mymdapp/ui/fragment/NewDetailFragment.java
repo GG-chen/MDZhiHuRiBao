@@ -94,7 +94,6 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
 
     private void setupData(CharSequence body) {
         collapsingToolbar.setTitle(bean.getTitle());
-        //author.setText(bean.getAuthor().getName());
         ImageUtils.getInstance().setImage(imageView,  bean.getImage());
         tv_content.setText(body);
     }
@@ -110,10 +109,8 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
         return R.layout.detail_new_frg;
     }
 
-    public static NewDetailFragment newInstance(int id) {
+    public static NewDetailFragment newInstance(Bundle args) {
         NewDetailFragment fragment = new NewDetailFragment();
-        Bundle args = new Bundle();
-        args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
     }

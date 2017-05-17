@@ -47,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
         TAG_LOG = this.getClass().getName();
         context = this;
         imageUtils = ImageUtils.getInstance();
-        imageUtils.setContext(context);
+        imageUtils.setContext(MyApplication.getContext());
         initActivity();
         initView();
         initData();

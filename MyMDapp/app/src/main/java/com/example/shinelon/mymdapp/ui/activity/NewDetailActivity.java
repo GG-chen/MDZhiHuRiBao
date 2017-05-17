@@ -1,6 +1,7 @@
 package com.example.shinelon.mymdapp.ui.activity;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -16,9 +17,9 @@ public class NewDetailActivity extends BaseToolBarActivity{
     @Override
     protected void initView() {
         super.initView();
-        int id = getIntent().getIntExtra("newId", 0);
-        if (id != 0 ) {
-            NewDetailFragment newDetailFragment = NewDetailFragment.newInstance(id);
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        if (bundle != null ) {
+            NewDetailFragment newDetailFragment = NewDetailFragment.newInstance(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.detail_content, newDetailFragment).commit();
         }
 

@@ -2,6 +2,9 @@ package com.example.shinelon.mymdapp.ui.fragment;
 
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -186,7 +189,9 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     @Override
     public void onItemClick(View view, int data) {
         Intent intent =  new Intent(context, NewDetailActivity.class);
-        intent.putExtra("newId", data);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", data);
+        intent.putExtra("bundle", bundle);
         startActivity(intent);
     }
 
