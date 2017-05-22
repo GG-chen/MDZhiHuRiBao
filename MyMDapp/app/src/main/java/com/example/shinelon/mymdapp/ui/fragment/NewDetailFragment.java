@@ -93,9 +93,11 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
     }
 
     private void setupData(CharSequence body) {
-        collapsingToolbar.setTitle(bean.getTitle());
-        ImageUtils.getInstance().setImage(imageView,  bean.getImage());
-        tv_content.setText(body);
+        if (bean != null) {
+            collapsingToolbar.setTitle(bean.getTitle());
+            ImageUtils.getInstance().setImage(imageView,  bean.getImage());
+            tv_content.setText(body);
+        }
     }
 
     private void loadData() {

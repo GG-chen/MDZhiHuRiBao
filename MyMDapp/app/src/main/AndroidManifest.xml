@@ -17,6 +17,7 @@
         tools:replace="android:icon"
         android:hardwareAccelerated="false"
         android:installLocation="auto"
+
         >
         <activity
             android:name=".ui.activity.WelcomeActivity"
@@ -31,6 +32,7 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"  >
         </activity>
         <activity android:name=".ui.activity.NewDetailActivity"

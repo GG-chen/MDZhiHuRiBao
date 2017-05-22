@@ -34,7 +34,7 @@ public class CustomViewPager extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return ((Integer.MAX_VALUE/10) * list.size());
     }
 
     @Override
@@ -49,16 +49,16 @@ public class CustomViewPager extends PagerAdapter {
         }
         Log.d("CustomViewPager", "instantiateItem: position: " + position);
         final View item = View.inflate(context, R.layout.header_item, null);
-        item.setTag(list.get(position).getId());
-        ImageView imageView = (ImageView) item.findViewById(R.id.header_img);
-        TextView title = (TextView) item.findViewById(R.id.header_text);
-        try {
+            item.setTag(list.get(position).getId());
+            ImageView imageView = (ImageView) item.findViewById(R.id.header_img);
+            TextView title = (TextView) item.findViewById(R.id.header_text);
+            try {
 
-            ImageUtils.getInstance().setImage(imageView, list.get(position).getImages());
-            title.setText(list.get(position).getTitle());
-        } catch (Exception e) {
-            e.toString();
-        }
+                ImageUtils.getInstance().setImage(imageView, list.get(position).getImages());
+                title.setText(list.get(position).getTitle());
+            } catch (Exception e) {
+                e.toString();
+            }
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,9 +83,8 @@ public class CustomViewPager extends PagerAdapter {
         if (list != null) {
             list.clear();
             this.list = item;
-            list.notify();
+            notifyDataSetChanged();
         }
-        //notifyDataSetChanged();
     }
 
 }

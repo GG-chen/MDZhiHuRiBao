@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/custom_backgroud"
     >
+
     <ListView
         android:layout_marginTop="120dp"
         android:id="@+id/turing_main"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.shinelon.mymdapp.R;
@@ -37,6 +38,7 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
     public ImageView send;
     @InjectView(R.id.edit_context)
     public EditText editText;
+
     private TuringAdapter adapter;
     private List<TuringBean> list = new ArrayList<>();
     Handler handler = new Handler(){
@@ -57,6 +59,7 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
     }
 
     private void initData() {
+
         TuringBean bean = new TuringBean();
         bean.setText("你好呀  :)  ");
         bean.setType(TuringParams.TYPE_LEFT);
@@ -105,6 +108,7 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
             handler.sendEmptyMessage(0);
 
         }
+        listView.setSelection(listView.getCount());
 
     }
 
@@ -128,5 +132,6 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
                 break;
         }
         editText.setText("");
+        listView.setSelection(listView.getCount());
     }
 }
