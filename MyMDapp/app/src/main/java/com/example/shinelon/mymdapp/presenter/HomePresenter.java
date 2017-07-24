@@ -20,16 +20,16 @@ import rx.schedulers.Schedulers;
 
 public class HomePresenter extends BasePresenter<HomeFrg> {
 
-    private final MyApplication my;
-    private HomeService homeService;
-    private Context context;
+    private final MyApplication mApplication;
+    private HomeService mHomeService;
+    private Context mContext;
     public HomePresenter(Context context) {
-        homeService = RetrofitUtils.createApi(context, HomeService.class);
-        this.context = context;
-        my = (MyApplication) context.getApplicationContext();
+        mHomeService = RetrofitUtils.createApi(context, HomeService.class);
+        this.mContext = context;
+        mApplication = (MyApplication) context.getApplicationContext();
     }
     public void loadNewsList(final String date) {
-            Subscription subscription = homeService.getNewsList(date)
+            Subscription subscription = mHomeService.getNewsList(date)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .subscribe(new Observer<NewsListBean>() {
@@ -45,7 +45,7 @@ public class HomePresenter extends BasePresenter<HomeFrg> {
 
                         @Override
                         public void onNext(NewsListBean newListBean) {
-                            newListBean.getStories().get(0).setDate(((HomeActivity)context).getFormatDate(newListBean.getDate()));
+                            newListBean.getStories().get(0).setDate(((HomeActivity) mContext).getFormatDate(newListBean.getDate()));
                             mMvpView.loadMore(newListBean);
                         }
                     });
@@ -54,7 +54,7 @@ public class HomePresenter extends BasePresenter<HomeFrg> {
 
     public void loadLastNewsList() {
             Log.d("TEST！！", "loadLastNewsList: ");
-            Subscription subscription = homeService.getNewsList()
+            Subscription subscription = mHomeService.getNewsList()
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .subscribe(new Observer<NewsListBean>() {

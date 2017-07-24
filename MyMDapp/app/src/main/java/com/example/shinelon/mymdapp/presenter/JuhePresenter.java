@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.shinelon.mymdapp.JuheParams;
 import com.example.shinelon.mymdapp.modle.bean.JuheBean;
-import com.example.shinelon.mymdapp.modle.bean.TuringBean;
 import com.example.shinelon.mymdapp.modle.http.JuheService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
 import com.example.shinelon.mymdapp.ui.fragment.JuheFrg;
@@ -18,16 +17,16 @@ import rx.schedulers.Schedulers;
  */
 
 public class JuhePresenter extends BasePresenter<JuheFrg> {
-    private Context context;
-    private JuheService juheService;
+    private Context mContext;
+    private JuheService mJuheService;
 
     public JuhePresenter(Context context) {
-        this.context = context;
-        juheService = RetrofitUtils.juheService;
+        this.mContext = context;
+        mJuheService = RetrofitUtils.mJuheService;
     }
 
     public void loadData(final String type) {
-        juheService.loadData(type, JuheParams.JUHE_APIKEY)
+        mJuheService.loadData(type, JuheParams.JUHE_APIKEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .subscribe(new Observer<JuheBean>() {

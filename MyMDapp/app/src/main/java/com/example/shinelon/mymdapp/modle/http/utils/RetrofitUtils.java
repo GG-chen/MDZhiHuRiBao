@@ -33,12 +33,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitUtils {
-    public static Retrofit retrofit;
-    public static WelfareService welfareService;
-    public static JuheService juheService;
-    public static TuringService turingService;
-    public static HomeService homeService;
-    private static File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "cache");
+    public static Retrofit mRetrofit;
+    public static WelfareService mWelfareService;
+    public static JuheService mJuheService;
+    public static TuringService mTuringService;
+    public static HomeService mHomeService;
+    private static File mHttpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "cache");
     private static final Interceptor INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -72,7 +72,7 @@ public class RetrofitUtils {
         }
     };
     private static int cacheSzie = 20 * 1024 * 1024;
-    private static Cache cache = new Cache(httpCacheDirectory, cacheSzie);
+    private static Cache cache = new Cache(mHttpCacheDirectory, cacheSzie);
     private static OkHttpClient client = new OkHttpClient.Builder()
             .addNetworkInterceptor(INTERCEPTOR)
             .addInterceptor(INTERCEPTOR_OFFLINE)
@@ -84,32 +84,32 @@ public class RetrofitUtils {
 
 
     public static <T> T createApi(Context context, Class<T> clazz) {
-        if (retrofit == null) {
+        if (mRetrofit == null) {
             synchronized (RetrofitUtils.class) {
-                if (retrofit == null) {
+                if (mRetrofit == null) {
                     Retrofit.Builder builder = new Retrofit.Builder();
                     builder.baseUrl("http://news-at.zhihu.com/api/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .client(client)
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
-                    retrofit = builder.build();
+                    mRetrofit = builder.build();
                     builder.baseUrl("http://gank.io/api/data/福利/");
                     Retrofit gank = builder.build();
-                    welfareService = gank.create(WelfareService.class);
+                    mWelfareService = gank.create(WelfareService.class);
                     builder.baseUrl("http://news-at.zhihu.com/api/");
                     Retrofit home = builder.build();
-                    homeService = gank.create(HomeService.class);
+                    mHomeService = gank.create(HomeService.class);
                     builder.baseUrl("http://v.juhe.cn/toutiao/");
                     Retrofit juhe = builder.build();
-                    juheService = juhe.create(JuheService.class);
+                    mJuheService = juhe.create(JuheService.class);
                     builder.baseUrl(TuringParams.TULING_URL);
                     Retrofit turing = builder.build();
-                    turingService = turing.create(TuringService.class);
+                    mTuringService = turing.create(TuringService.class);
 
                 }
             }
         }
-        return retrofit.create(clazz);
+        return mRetrofit.create(clazz);
     }
 
 

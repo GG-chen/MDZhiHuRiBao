@@ -11,20 +11,20 @@ import com.example.shinelon.mymdapp.utils.SPUtil;
 
 public class MyApplication extends Application {
     private static  MyApplication myApplication;
-    private static SPUtil spUtil;
+    private static SPUtil mSpUtil;
     @Override
     public void onCreate() {
         super.onCreate();
         myApplication  = this;
-        spUtil = new SPUtil(this);
+        mSpUtil = new SPUtil(this);
     }
 
     public static Context getContext() {
         return myApplication;
     }
 
-    public static SPUtil getSpUtil() {
-        return spUtil;
+    public static SPUtil getmSpUtil() {
+        return mSpUtil;
     }
 
 }

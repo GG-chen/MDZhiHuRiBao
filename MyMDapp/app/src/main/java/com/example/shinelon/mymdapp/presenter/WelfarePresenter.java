@@ -9,25 +9,24 @@ import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
 import com.example.shinelon.mymdapp.ui.fragment.WelfareFrg;
 
 import rx.Observer;
-import rx.Subscription;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by Shinelon on 2017/3/4.
  */
 public class WelfarePresenter extends BasePresenter<WelfareFrg> {
-    private final WelfareService welfareService;
-    private Context context;
+    private final WelfareService mWelfareService;
+    private Context mContext;
 
     public WelfarePresenter(Context context) {
-        this.context = context;
-        //welfareService = RetrofitUtils.createWelfare(context, WelfareService.class);
-        welfareService = RetrofitUtils.welfareService;
+        this.mContext = context;
+        //mWelfareService = RetrofitUtils.createWelfare(mContext, WelfareService.class);
+        mWelfareService = RetrofitUtils.mWelfareService;
     }
 
     public void loadWelfare(String count) {
         Log.d("WelfareFragment", "loadWelfare");
-        welfareService.loadWelfare(count)
+        mWelfareService.loadWelfare(count)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .subscribe(new Observer<WelfareBean>() {

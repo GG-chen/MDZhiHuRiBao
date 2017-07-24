@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.shinelon.mymdapp.TuringParams;
 import com.example.shinelon.mymdapp.modle.bean.TuringBean;
-import com.example.shinelon.mymdapp.modle.bean.WelfareBean;
 import com.example.shinelon.mymdapp.modle.http.TuringService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
 import com.example.shinelon.mymdapp.ui.fragment.TuringFrg;
@@ -18,16 +17,16 @@ import rx.schedulers.Schedulers;
  */
 
 public class TuringPresenter extends BasePresenter<TuringFrg> {
-    private Context context;
-    private TuringService turingService;
+    private Context mContext;
+    private TuringService mTuringService;
 
     public TuringPresenter(Context context) {
-        this.context = context;
-        turingService = RetrofitUtils.turingService;
+        this.mContext = context;
+        mTuringService = RetrofitUtils.mTuringService;
     }
 
     public void loadData(String text) {
-        turingService.getData(TuringParams.TULING_KEY, text)
+        mTuringService.getData(TuringParams.TULING_KEY, text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.immediate())
                 .subscribe(new Observer<TuringBean>() {

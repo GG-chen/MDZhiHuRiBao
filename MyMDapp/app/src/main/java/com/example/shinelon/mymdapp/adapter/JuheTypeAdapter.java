@@ -23,15 +23,15 @@ import java.util.List;
 public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyViewHolder> implements View.OnClickListener {
     private static final int NOMAL_ITEM = 1;
     private static final int LODING_ITEM = 0;
-    private Context context;
-    private List<JuheBean.JuheResult.JuHeItem> items = new ArrayList<JuheBean.JuheResult.JuHeItem>();
+    private Context mContext;
+    private List<JuheBean.JuheResult.JuHeItem> mItems = new ArrayList<JuheBean.JuheResult.JuHeItem>();
 
     public JuheTypeAdapter() {
     }
 
     @Override
     public JuheTypeAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        mContext = parent.getContext();
         Log.d("JuheFragment", "onCreateViewHolder: " + viewType);
         switch (viewType) {
             case NOMAL_ITEM:
@@ -49,7 +49,7 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
 
     @Override
     public void onBindViewHolder(JuheTypeAdapter.MyViewHolder holder, int position) {
-        Log.d("JuheFragment", "onBindViewHolder:11111111 " + items.get(0).getCategory());
+        Log.d("JuheFragment", "onBindViewHolder:11111111 " + mItems.get(0).getCategory());
         int type = getItemViewType(position);
         if (type == NOMAL_ITEM) {
             onBindNomalItem(holder, position);
@@ -64,17 +64,17 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
 
     private void onBindNomalItem(JuheTypeAdapter.MyViewHolder holder, int position) {
         holder.layout.setTag(position);
-        holder.title.setText(items.get(position).getTitle());
-        ImageUtils.getInstance().setImage(holder.imageView, items.get(position).getThumbnail_pic_s());
+        holder.title.setText(mItems.get(position).getTitle());
+        ImageUtils.getInstance().setImage(holder.imageView, mItems.get(position).getThumbnail_pic_s());
 
     }
 
     @Override
     public int getItemCount() {
-        if (items == null) {
+        if (mItems == null) {
             return 0;
         }
-        return items.size();
+        return mItems.size();
     }
 
     @Override
@@ -107,9 +107,9 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
     }
     public void setData(List<JuheBean.JuheResult.JuHeItem> items) {
         Log.d("JuheFragment", "setData:11111111 " + items.get(0).getCategory());
-        this.items.clear();
+        this.mItems.clear();
         Log.d("JuheFragment", "setData: 22222222" + items.get(0).getCategory());
-        this.items.addAll(items);
+        this.mItems.addAll(items);
         Log.d("JuheFragment", "setData: 33333333333" + items.get(0).getCategory());
        // notifyDataSetChanged();
 
@@ -124,7 +124,7 @@ public class JuheTypeAdapter extends RecyclerView.Adapter<JuheTypeAdapter.MyView
 
     }
 
-    public List<JuheBean.JuheResult.JuHeItem> getItems() {
-        return items;
+    public List<JuheBean.JuheResult.JuHeItem> getmItems() {
+        return mItems;
     }
 }

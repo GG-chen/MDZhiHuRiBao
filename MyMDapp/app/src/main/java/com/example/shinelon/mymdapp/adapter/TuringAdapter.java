@@ -1,14 +1,10 @@
 package com.example.shinelon.mymdapp.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,22 +24,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Shinelon on 2017/3/6.
  */
 public class TuringAdapter extends BaseAdapter {
-    private List<TuringBean> list = new ArrayList<>();
-    private Context context;
+    private List<TuringBean> mList = new ArrayList<>();
+    private Context mContext;
 
     public TuringAdapter(List<TuringBean> list, Context context) {
-        this.list = list;
-        this.context = context;
+        this.mList = list;
+        this.mContext = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return mList.get(position);
     }
 
     @Override
@@ -58,7 +54,7 @@ public class TuringAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (list.get(position).getType() != TuringParams.TYPE_LEFT) {
+        if (mList.get(position).getType() != TuringParams.TYPE_LEFT) {
             return TuringParams.TYPE_RIGHT;
         } else {
             return TuringParams.TYPE_LEFT;
@@ -83,7 +79,7 @@ public class TuringAdapter extends BaseAdapter {
     }
 
     private void setData(int position, TuringHolder holder) {
-        TuringBean bean = list.get(position);
+        TuringBean bean = mList.get(position);
         if (bean.getType() == TuringParams.TYPE_RIGHT) {
             holder.bubbleTextView.setText(bean.getText());
             return;
@@ -146,17 +142,17 @@ public class TuringAdapter extends BaseAdapter {
     @NonNull
     private SpannableString setUrlData(String url) {
         SpannableString spannableString = new SpannableString(url);
-        MyClickSpan myClickSpan = new MyClickSpan(url, context);
+        MyClickSpan myClickSpan = new MyClickSpan(url, mContext);
         spannableString.setSpan(myClickSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 
     private View getConverViewByType(int position) {
         View convertView;
-        if (list.get(position).getType() == TuringParams.TYPE_LEFT) {
-            convertView = View.inflate(context, R.layout.turing_left, null);
+        if (mList.get(position).getType() == TuringParams.TYPE_LEFT) {
+            convertView = View.inflate(mContext, R.layout.turing_left, null);
         } else {
-            convertView = View.inflate(context, R.layout.turing_right, null);
+            convertView = View.inflate(mContext, R.layout.turing_right, null);
 
         }
         return convertView;

@@ -3,24 +3,18 @@ package com.example.shinelon.mymdapp.ui.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.example.shinelon.mymdapp.MyApplication;
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.bean.WelcomeBean;
 import com.example.shinelon.mymdapp.modle.http.WelcomeService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
-import com.example.shinelon.mymdapp.utils.MyUtils;
 
 
 import rx.Observer;
@@ -39,10 +33,9 @@ public class WelcomeActivity extends BaseActivity {
     public static final int LODE_SUCCESS = 1;
     public static final int LODE_ERROR = 2;
     public static final int ENTER_MAIN = 3;
-    private ImageView imageView;
-    private TextView text;
-    private WelcomeBean welcomeBean;
-    private WelcomeService welcomeService;
+    private ImageView mImageView;
+    private WelcomeBean mWelcomeBean;
+    private WelcomeService mWelcomeService;
 
 
 
@@ -52,14 +45,14 @@ public class WelcomeActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case LODE_SUCCESS:
-                    welcomeBean = (WelcomeBean) msg.obj;
-                    imageUtils.setImage(imageView, welcomeBean.getCreatives().get(0).getUrl());
+                    mWelcomeBean = (WelcomeBean) msg.obj;
+                    mImageUtils.setImage(mImageView, mWelcomeBean.getCreatives().get(0).getUrl());
                     Message message = handler.obtainMessage();
                     message.what = ENTER_MAIN;
                     handler.sendMessageDelayed(message,ENTER_TIME);
                     break;
                 case LODE_ERROR:
-                    imageView.setImageResource(R.drawable.welcome);
+                    mImageView.setImageResource(R.drawable.welcome);
                     Message messageerror = handler.obtainMessage();
                     messageerror.what = ENTER_MAIN;
                     handler.sendMessageDelayed(messageerror,ENTER_TIME);
@@ -75,6 +68,7 @@ public class WelcomeActivity extends BaseActivity {
         }
     };
     private RelativeLayout wel_relative;
+    private TextView mText;
 
 
     @Override
@@ -85,13 +79,13 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        welcomeService = RetrofitUtils.createApi(this,WelcomeService.class);
+        mWelcomeService = RetrofitUtils.createApi(this,WelcomeService.class);
         getData();
     }
     @Override
     protected void initView() {
-        imageView = (ImageView) findViewById(R.id.welcome_view);
-        text = (TextView) findViewById(R.id.writer);
+        mImageView = (ImageView) findViewById(R.id.welcome_view);
+        mText = (TextView) findViewById(R.id.writer);
         wel_relative = (RelativeLayout) findViewById(R.id.wel_relative);
         AnimationSet set = new AnimationSet(true);
         AlphaAnimation scaleAnimation = new AlphaAnimation(0.5f,1.0f);
@@ -105,7 +99,7 @@ public class WelcomeActivity extends BaseActivity {
 
     public void getData() {
         Log.d("WelcomeActivity", "getDate!!");
-            welcomeService.getWelcomeImg(getScreenSize())
+            mWelcomeService.getWelcomeImg(getScreenSize())
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.immediate())
                     .subscribe(new Observer<WelcomeBean>() {

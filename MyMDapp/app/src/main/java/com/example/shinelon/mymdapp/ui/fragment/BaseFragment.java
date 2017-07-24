@@ -1,21 +1,15 @@
 package com.example.shinelon.mymdapp.ui.fragment;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
 
 import com.example.shinelon.mymdapp.MyApplication;
-import com.example.shinelon.mymdapp.R;
-import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 
 import butterknife.ButterKnife;
 
@@ -25,9 +19,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
     protected static String TAG_LOG = null;
-    protected Context context;
-    protected View view;
-    protected MyApplication my;
+    protected Context mContext;
+    protected View mView;
+    protected MyApplication mApplication;
     public Boolean isAdd = false;
 
 
@@ -35,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         log("onAttach");
         super.onAttach(context);
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -61,10 +55,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         log("onViewCreated");
-        this.view = view;
+        this.mView = view;
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this,view);
-        my = (MyApplication) context.getApplicationContext();
+        mApplication = (MyApplication) mContext.getApplicationContext();
         initFragment();
     }
 

@@ -8,20 +8,20 @@ import android.content.SharedPreferences;
  */
 
 public class SPUtil {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
     public SPUtil(Context context) {
-        sharedPreferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
 
     }
     public  void put(String theme, String data) {
-        editor = sharedPreferences.edit();
-        editor.putString(theme, data);
-        editor.commit();
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(theme, data);
+        mEditor.commit();
     }
 
     public String get(String theme, String data) {
-        String saveTheme = sharedPreferences.getString(theme, data);
+        String saveTheme = mSharedPreferences.getString(theme, data);
         return saveTheme;
     }
 }

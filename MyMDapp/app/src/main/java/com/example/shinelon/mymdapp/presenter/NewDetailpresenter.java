@@ -18,13 +18,13 @@ import rx.schedulers.Schedulers;
 
 public class NewDetailpresenter extends BasePresenter<HomeFrg> {
 
-    private NewDetailService newDetailService;
+    private NewDetailService mNewDetailService;
     public NewDetailpresenter(Context context) {
-        newDetailService = RetrofitUtils.createApi(context, NewDetailService.class);
+        mNewDetailService = RetrofitUtils.createApi(context, NewDetailService.class);
     }
     public void loadNewsList(int id) {
 
-        Subscription subscription = newDetailService.getNewDetail(id)
+        Subscription subscription = mNewDetailService.getNewDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<NewDetailBean>() {

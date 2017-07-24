@@ -16,15 +16,15 @@ import butterknife.InjectView;
 public class AboutFragment extends BaseFragment {
     public static final String MY_GITHUB = "https://github.com/GG-chen/MDZhiHuRiBao";
     @InjectView(R.id.about_context)
-    public TextView about;
+    public TextView mAbout;
     @Override
     protected void initFragment() {
         SpannableString spannableString = new SpannableString(MY_GITHUB);
-        MyClickSpan myClickSpan = new MyClickSpan(MY_GITHUB, context);
+        MyClickSpan myClickSpan = new MyClickSpan(MY_GITHUB, mContext);
         spannableString.setSpan(myClickSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        about.append("\n");
-        about.append(spannableString);
-        about.setMovementMethod(LinkMovementMethod.getInstance());
+        mAbout.append("\n");
+        mAbout.append(spannableString);
+        mAbout.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

@@ -24,11 +24,11 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RefreshRecycler
     private static final int NOMAL_ITEM = 1;
     private static final int LODING_ITEM = 0;
     private boolean isLoading = false;
-    public List<NewsListBean.Stories> list = new ArrayList<>();
-    public Context context;
+    public List<NewsListBean.Stories> mList = new ArrayList<>();
+    public Context mContext;
 
     public RefreshRecyclerAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
         Log.d("Adapter", "structure ");
     }
 
@@ -64,8 +64,8 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RefreshRecycler
     }
 
     private void onBindNomalItem(MyViewHolder holder, int position) {
-        holder.layout.setTag(list.get(position).getId());
-        NewsListBean.Stories item = list.get(position);
+        holder.layout.setTag(mList.get(position).getId());
+        NewsListBean.Stories item = mList.get(position);
         holder.title.setText(item.getTitle());
         holder.beforeData.setVisibility(View.GONE);
         if (item.getDate() != null) {
@@ -78,7 +78,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RefreshRecycler
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return mList.size();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class RefreshRecyclerAdapter extends RecyclerView.Adapter<RefreshRecycler
     public void addItem(List<NewsListBean.Stories> stories) {
         if (stories != null) {
             Log.d("addItem", "addItem: " + stories.size());
-            list.addAll(stories);
+            mList.addAll(stories);
         }
     }
 

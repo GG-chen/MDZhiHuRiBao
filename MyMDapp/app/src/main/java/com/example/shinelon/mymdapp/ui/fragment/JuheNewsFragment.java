@@ -9,13 +9,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.adapter.JuheTypeAdapter;
 import com.example.shinelon.mymdapp.modle.bean.JuheBean;
 import com.example.shinelon.mymdapp.presenter.JuhePresenter;
-import com.example.shinelon.mymdapp.ui.activity.HomeActivity;
 import com.example.shinelon.mymdapp.ui.activity.JuheDetailActivity;
 import com.example.shinelon.mymdapp.ui.view.WrapRecyclerView;
 
@@ -25,18 +23,18 @@ import butterknife.InjectView;
  * Created by Shinelon on 2017/3/10.
  */
 public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeAdapter.OnViewItemClickListener {
-    private JuheTypeAdapter newsAdapter;
-    private String type = null;
+    private JuheTypeAdapter mNewsAdapter;
+    private String mType = null;
     @InjectView(R.id.juhe_list_view)
-    public WrapRecyclerView recyclerView;
+    public WrapRecyclerView mRecyclerView;
     @InjectView(R.id.juhe_swipe_layout)
-    public SwipeRefreshLayout swipeRefreshLayout;
-    private JuhePresenter presenter;
-    Handler handler = new Handler(){
+    public SwipeRefreshLayout mSwipeRefreshLayout;
+    private JuhePresenter mPresenter;
+    Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            newsAdapter.notifyDataSetChanged();
+            mNewsAdapter.notifyDataSetChanged();
         }
     };
 
@@ -52,7 +50,7 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            type = args.getString("TYPE");
+            mType = args.getString("TYPE");
         }
     }
     @Override
@@ -63,21 +61,21 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
 
     private void initData() {
         Log.d("JuheNewsFragment", "initData: ");
-        newsAdapter = new JuheTypeAdapter();
-        newsAdapter.setOnItemClickListener(this);
-        presenter = new JuhePresenter(context);
-        presenter.attachView(this);
-        presenter.loadData(type);
+        mNewsAdapter = new JuheTypeAdapter();
+        mNewsAdapter.setOnItemClickListener(this);
+        mPresenter = new JuhePresenter(mContext);
+        mPresenter.attachView(this);
+        mPresenter.loadData(mType);
     }
 
     private void initView() {
-        LinearLayoutManager manager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(newsAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.setAdapter(mNewsAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.loadData(type);
+                mPresenter.loadData(mType);
             }
         });
     }
@@ -91,16 +89,16 @@ public class JuheNewsFragment extends BaseFragment implements JuheFrg, JuheTypeA
     public void loadData(JuheBean bean) {
         if (bean != null) {
             Log.d("JuheNewsFragment", "loadData: ");
-            newsAdapter.setData(bean.getResult().getData());
-            swipeRefreshLayout.setRefreshing(false);
-            handler.sendEmptyMessage(0);
+            mNewsAdapter.setData(bean.getResult().getData());
+            mSwipeRefreshLayout.setRefreshing(false);
+            mHandler.sendEmptyMessage(0);
         }
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        JuheBean.JuheResult.JuHeItem item = newsAdapter.getItems().get(position);
-            Intent intent = new Intent(context, JuheDetailActivity.class);
+        JuheBean.JuheResult.JuHeItem item = mNewsAdapter.getmItems().get(position);
+            Intent intent = new Intent(mContext, JuheDetailActivity.class);
             Log.d("onItemClick", "onItemClick: " + item.getTitle());
             intent.putExtra("juheUrl", item.getUrl());
             intent.putExtra("juheTitle", item.getTitle());

@@ -1,17 +1,12 @@
 package com.example.shinelon.mymdapp.ui.fragment;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.shinelon.mymdapp.R;
@@ -31,20 +26,20 @@ import butterknife.InjectView;
  * Created by Shinelon on 2017/2/23.
  */
 public class TuringFragment extends BaseFragment implements TuringFrg, View.OnClickListener {
-    private TuringPresenter presenter;
+    private TuringPresenter mPresenter;
     @InjectView(R.id.turing_main)
-    public ListView listView;
+    public ListView mListView;
     @InjectView(R.id.send_msg)
-    public ImageView send;
+    public ImageView mSend;
     @InjectView(R.id.edit_context)
-    public EditText editText;
+    public EditText mEditText;
 
-    private TuringAdapter adapter;
-    private List<TuringBean> list = new ArrayList<>();
-    Handler handler = new Handler(){
+    private TuringAdapter mAdapter;
+    private List<TuringBean> mList = new ArrayList<>();
+    Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
     };
     private static boolean isFirst = true;
@@ -64,20 +59,20 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
         bean.setText("你好呀  :)  ");
         bean.setType(TuringParams.TYPE_LEFT);
         bean.setCode(TuringParams.TulingCode.TEXT);
-        list.add(bean);
+        mList.add(bean);
     }
 
 
     private void initView() {
-        presenter = new TuringPresenter(context);
-        presenter.attachView(this);
-        adapter = new TuringAdapter(list, context);
-        listView.setAdapter(adapter);
-        send.setOnClickListener(this);
-        listView.setOnTouchListener(new View.OnTouchListener() {
+        mPresenter = new TuringPresenter(mContext);
+        mPresenter.attachView(this);
+        mAdapter = new TuringAdapter(mList, mContext);
+        mListView.setAdapter(mAdapter);
+        mSend.setOnClickListener(this);
+        mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                MyUtils.hideKeyboard((HomeActivity)context);
+                MyUtils.hideKeyboard((HomeActivity) mContext);
                 return false;
             }
         });
@@ -98,40 +93,40 @@ public class TuringFragment extends BaseFragment implements TuringFrg, View.OnCl
                 && bean.getCode() != TuringParams.TulingCode.ERROR_OUT_OF_TIMES
                 && bean.getCode() != TuringParams.TulingCode.ERROR_NOT_SUPPORT
                 ) {
-            list.add(bean);
-            handler.sendEmptyMessage(0);
+            mList.add(bean);
+            mHandler.sendEmptyMessage(0);
         } else {
             TuringBean errorBean = new TuringBean();
             errorBean.setText("抱歉，我生病了，不能陪小主聊天了...");
             errorBean.setType(TuringParams.TYPE_LEFT);
-            list.add(errorBean);
-            handler.sendEmptyMessage(0);
+            mList.add(errorBean);
+            mHandler.sendEmptyMessage(0);
 
         }
-        listView.setSelection(listView.getCount());
+        mListView.setSelection(mListView.getCount());
 
     }
 
     @Override
     public void onClick(View v) {
-        MyUtils.hideKeyboard((HomeActivity)context);
+        MyUtils.hideKeyboard((HomeActivity) mContext);
         switch (v.getId()) {
             case R.id.send_msg:
-                String text = String.valueOf(editText.getText());
+                String text = String.valueOf(mEditText.getText());
                 text.trim();
                 if (text != null && !"".equals(text)) {
                     TuringBean bean = new TuringBean();
                     bean.setText(text);
                     bean.setType(TuringParams.TYPE_RIGHT);
-                    list.add(bean);
-                    handler.sendEmptyMessage(0);
-                    presenter.loadData(text);
+                    mList.add(bean);
+                    mHandler.sendEmptyMessage(0);
+                    mPresenter.loadData(text);
                 } else {
-                    Toast.makeText(context, "不能为空！！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "不能为空！！", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
-        editText.setText("");
-        listView.setSelection(listView.getCount());
+        mEditText.setText("");
+        mListView.setSelection(mListView.getCount());
     }
 }

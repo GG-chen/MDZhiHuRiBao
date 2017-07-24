@@ -15,21 +15,21 @@ import java.io.IOException;
  */
 
 public class BitmapSaveUtil {
-    private final String dir;
-    public static BitmapSaveUtil saveUtil;
-    private Context context;
-    private String local_file;
+    private final String mDir;
+    public static BitmapSaveUtil mSaveUtil;
+    private Context mContext;
+    private String mLocalFile;
 
     public BitmapSaveUtil(Context context) {
-        this.context = context;
-        dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mdapp/";
+        this.mContext = context;
+        mDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/mdapp/";
     }
 
     public static BitmapSaveUtil getSaveUtil(Context context) {
-        if (saveUtil == null) {
-            saveUtil = new BitmapSaveUtil(context);
+        if (mSaveUtil == null) {
+            mSaveUtil = new BitmapSaveUtil(context);
         }
-        return saveUtil;
+        return mSaveUtil;
     }
 
     public boolean saveBitmap(Bitmap bitmap, String name) {
@@ -39,7 +39,7 @@ public class BitmapSaveUtil {
             return false;
         }
         try {
-            File f = new File(dir);
+            File f = new File(mDir);
 
             if(!f.exists()){
 
@@ -47,9 +47,9 @@ public class BitmapSaveUtil {
 
             }
 
-            local_file = f.getAbsolutePath()+"/"+ name + ".jpg";
+            mLocalFile = f.getAbsolutePath()+"/"+ name + ".jpg";
 
-            File file = new File(local_file);
+            File file = new File(mLocalFile);
 
             try {
 
@@ -69,7 +69,7 @@ public class BitmapSaveUtil {
             out.flush();
             out.close();
             Uri uri = Uri.fromFile(file);
-            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -78,14 +78,14 @@ public class BitmapSaveUtil {
     }
 
     public boolean isSave(String name) {
-        File file = new File(dir + name + ".jpg");
+        File file = new File(mDir + name + ".jpg");
         if (file.exists()) {
             return true;
         }
         return false;
     }
 
-    public String getLocal_file() {
-        return local_file;
+    public String getmLocalFile() {
+        return mLocalFile;
     }
 }

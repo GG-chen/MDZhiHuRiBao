@@ -3,8 +3,6 @@ package com.example.shinelon.mymdapp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,20 +36,20 @@ import butterknife.InjectView;
  */
 public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecyclerAdapter.OnRecyclerViewItemClickListener {
     public static int VIEWPAGER_COUNT = 5;
-    private NewsListBean newsListBean;
-    private HomePresenter homePresenter;
-    private HomeActivity home;
-    private List<NewsListBean.TopStoried> list = new ArrayList<>();
+    private NewsListBean mNewsListBean;
+    private HomePresenter mHomePresenter;
+    private HomeActivity mHome;
+    private List<NewsListBean.TopStoried> mList = new ArrayList<>();
     @InjectView(R.id.list_view)
-    WrapRecyclerView recyclerView;
+    WrapRecyclerView mRecyclerView;
     @InjectView(R.id.swipe_layout)
-    MySwipeRefreshLayout refreshLayout;
-    public RefreshRecyclerAdapter adapter;
-    private String needLodeDate = null;
-    private LinearLayoutManager manager;
+    MySwipeRefreshLayout mRefreshLayout;
+    public RefreshRecyclerAdapter mAdapter;
+    private String mNeedLodeDate = null;
+    private LinearLayoutManager mManager;
     private boolean isLoading = false;
-    private CustomViewPager customViewPager;
-    private SwipeViewPager swipeViewPager;
+    private CustomViewPager mCustomViewPager;
+    private SwipeViewPager mSwipeViewPager;
 
 
     @Override
@@ -65,27 +63,27 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     }
 
     private void initRecyclerView() {
-        home = (HomeActivity) getActivity();
-        homePresenter = new HomePresenter(context);
-        homePresenter.attachView(this);
-        manager = new LinearLayoutManager(context) ;
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
-        adapter = new RefreshRecyclerAdapter(context);
-        adapter.setOnItemClickListener(this);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mHome = (HomeActivity) getActivity();
+        mHomePresenter = new HomePresenter(mContext);
+        mHomePresenter.attachView(this);
+        mManager = new LinearLayoutManager(mContext) ;
+        mRecyclerView.setLayoutManager(mManager);
+        mRecyclerView.setHasFixedSize(true);
+        mAdapter = new RefreshRecyclerAdapter(mContext);
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    int visibleItemCount = manager.getChildCount();
-                    int totalItemCount = manager.getItemCount();
-                    int pastVisibleItems = manager.findFirstVisibleItemPosition();
+                    int visibleItemCount = mManager.getChildCount();
+                    int totalItemCount = mManager.getItemCount();
+                    int pastVisibleItems = mManager.findFirstVisibleItemPosition();
                     if (!isLoading && (visibleItemCount + pastVisibleItems + 3) >= totalItemCount) {
                         isLoading = true;
                         log("onScrolled");
-                        homePresenter.loadNewsList(needLodeDate);
-                        adapter.startLoding();
+                        mHomePresenter.loadNewsList(mNeedLodeDate);
+                        mAdapter.startLoding();
                     }
                 }
             }
@@ -100,35 +98,35 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
 
     private void loadNewData() {
         log("loadNewData");
-        needLodeDate = home.getCurrentData();
-        homePresenter.loadLastNewsList();
+        mNeedLodeDate = mHome.getCurrentData();
+        mHomePresenter.loadLastNewsList();
     }
 
     private void setupPager() {
-         swipeViewPager = new SwipeViewPager(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MyUtils.dp2px(context,(float)300));
-        swipeViewPager.setLayoutParams(params);
+         mSwipeViewPager = new SwipeViewPager(mContext);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MyUtils.dp2px(mContext,(float)300));
+        mSwipeViewPager.setLayoutParams(params);
         //初始化 轮播图指示点
-        swipeViewPager.updateIndicatorView(VIEWPAGER_COUNT);
-        customViewPager = new CustomViewPager(context, list);
-        swipeViewPager.setAdapter(customViewPager);
+        mSwipeViewPager.updateIndicatorView(VIEWPAGER_COUNT);
+        mCustomViewPager = new CustomViewPager(mContext, mList);
+        mSwipeViewPager.setAdapter(mCustomViewPager);
        //广告图开启滚动功能
-        swipeViewPager.startScorll();
-        recyclerView.addHeaderView(swipeViewPager);
-        recyclerView.setAdapter(adapter);
+        mSwipeViewPager.startScorll();
+        mRecyclerView.addHeaderView(mSwipeViewPager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
     private void setupSwipe() {
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 log("onRefresh!! ");
-                newsListBean = null;
+                mNewsListBean = null;
                 notifyDataHasChanged();
                 loadNewData();
-                refreshLayout.setRefreshing(false);
-                Toast.makeText(context, "更新成功！！", Toast.LENGTH_SHORT).show();
+                mRefreshLayout.setRefreshing(false);
+                Toast.makeText(mContext, "更新成功！！", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -149,13 +147,13 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
 
         if (data != null) {
             log("refresh!!");
-            list.clear();
-            newsListBean = data;
-            adapter.addItem(newsListBean.getStories());
-            list.addAll(newsListBean.getTop_stories());
-            customViewPager.addList(newsListBean.getTop_stories());
-            VIEWPAGER_COUNT = newsListBean.getTop_stories().size();
-            homePresenter.loadNewsList(needLodeDate);
+            mList.clear();
+            mNewsListBean = data;
+            mAdapter.addItem(mNewsListBean.getStories());
+            mList.addAll(mNewsListBean.getTop_stories());
+            mCustomViewPager.addList(mNewsListBean.getTop_stories());
+            VIEWPAGER_COUNT = mNewsListBean.getTop_stories().size();
+            mHomePresenter.loadNewsList(mNeedLodeDate);
             notifyDataHasChanged();
 
         }
@@ -164,19 +162,19 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
     }
 
     private void notifyDataHasChanged() {
-        //customViewPager.notifyDataSetChanged();
-        adapter.notifyDataSetChanged();
+        //mCustomViewPager.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadMore(NewsListBean data) {
         Log.d("loadMore", "loadMore: " + data.getStories().size());
         if (isLoading) {
-            adapter.finishLoding();
+            mAdapter.finishLoding();
             isLoading = false;
         }
-        needLodeDate = data.getDate();
-        adapter.addItem(data.getStories());
+        mNeedLodeDate = data.getDate();
+        mAdapter.addItem(data.getStories());
         notifyDataHasChanged();
 
     }
@@ -188,7 +186,7 @@ public class HomeFragment extends BaseFragment implements HomeFrg, RefreshRecycl
 
     @Override
     public void onItemClick(View view, int data) {
-        Intent intent =  new Intent(context, NewDetailActivity.class);
+        Intent intent =  new Intent(mContext, NewDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("id", data);
         intent.putExtra("bundle", bundle);

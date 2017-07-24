@@ -13,7 +13,7 @@ import com.example.shinelon.mymdapp.ui.ThemeUIInterface;
  */
 
 public class ThemeLinearLayout extends LinearLayout implements ThemeUIInterface{
-    private int attr_background = -1;
+    private int mAttrBackground = -1;
 
     public ThemeLinearLayout(Context context) {
         super(context);
@@ -21,12 +21,12 @@ public class ThemeLinearLayout extends LinearLayout implements ThemeUIInterface{
 
     public ThemeLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.attr_background = ViewAttributeUtil.getBackgroundAttribute(attrs);
+        this.mAttrBackground = ViewAttributeUtil.getBackgroundAttribute(attrs);
     }
 
     public ThemeLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.attr_background = ViewAttributeUtil.getBackgroundAttribute(attrs);
+        this.mAttrBackground = ViewAttributeUtil.getBackgroundAttribute(attrs);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ThemeLinearLayout extends LinearLayout implements ThemeUIInterface{
 
     @Override
     public void setTheme(Resources.Theme themeId) {
-        if (attr_background != -1) {
-            ViewAttributeUtil.applyBackgroundDrawable(this,themeId,attr_background);
+        if (mAttrBackground != -1) {
+            ViewAttributeUtil.applyBackgroundDrawable(this,themeId, mAttrBackground);
         }
     }
 }

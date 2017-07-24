@@ -9,7 +9,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,28 +31,28 @@ import butterknife.InjectView;
  */
 
 public class NewDetailFragment extends BaseFragment implements HomeFrg {
-    private int newId = 0;
-    private NewDetailpresenter newDetailpresenter;
-    private NewDetailBean bean;
+    private int mNewId = 0;
+    private NewDetailpresenter mNewDetailpresenter;
+    private NewDetailBean mBean;
     @InjectView(R.id.appbar)
-    AppBarLayout appbar;
+    AppBarLayout mAppbar;
 
     @InjectView(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     @InjectView(R.id.author)
-    TextView author;
+    TextView mAuthor;
 
     @InjectView(R.id.tv_content)
-    TextView tv_content;
+    TextView mTvContent;
 
     @InjectView(R.id.backdrop)
-    ImageView imageView;
+    ImageView mImageView;
 
     @InjectView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
+    CollapsingToolbarLayout mCollapsingToolbar;
 
-    Handler handler = new Handler() {
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -65,11 +64,11 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
     protected void initFragment() {
 
         if (getArguments().getInt("id") != 0) {
-            newId = getArguments().getInt("id");
+            mNewId = getArguments().getInt("id");
         }
         if (!((BaseToolBarActivity) getActivity()).providesActivityToolbar()) {
-            ((BaseToolBarActivity) getActivity()).setToolbar(toolbar);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            ((BaseToolBarActivity) getActivity()).setToolbar(mToolbar);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getActivity().finish();
@@ -82,28 +81,28 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
     }
 
     private void initView() {
-        appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 int maxScroll = appBarLayout.getTotalScrollRange();
                 float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
-                toolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 19, 121, 214));
+                mToolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 19, 121, 214));
             }
         });
     }
 
     private void setupData(CharSequence body) {
-        if (bean != null) {
-            collapsingToolbar.setTitle(bean.getTitle());
-            ImageUtils.getInstance().setImage(imageView,  bean.getImage());
-            tv_content.setText(body);
+        if (mBean != null) {
+            mCollapsingToolbar.setTitle(mBean.getTitle());
+            ImageUtils.getInstance().setImage(mImageView,  mBean.getImage());
+            mTvContent.setText(body);
         }
     }
 
     private void loadData() {
-        newDetailpresenter = new NewDetailpresenter(context);
-        newDetailpresenter.attachView(this);
-        newDetailpresenter.loadNewsList(newId);
+        mNewDetailpresenter = new NewDetailpresenter(mContext);
+        mNewDetailpresenter.attachView(this);
+        mNewDetailpresenter.loadNewsList(mNewId);
     }
 
     @Override
@@ -129,7 +128,7 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
 
     @Override
     public void loadNewDetail(NewDetailBean data) {
-        bean = data;
+        mBean = data;
         readHtml();
 
     }
@@ -172,10 +171,10 @@ public class NewDetailFragment extends BaseFragment implements HomeFrg {
                         return drawable;
                     }
                 };
-                CharSequence test = Html.fromHtml(bean.getBody(), imageGetter, null);
+                CharSequence test = Html.fromHtml(mBean.getBody(), imageGetter, null);
                 msg.what = 1;
                 msg.obj = test;
-                handler.sendMessage(msg);
+                mHandler.sendMessage(msg);
             }
         });
         t.start();

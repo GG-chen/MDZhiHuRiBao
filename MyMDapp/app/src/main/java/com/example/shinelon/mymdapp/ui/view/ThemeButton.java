@@ -13,22 +13,22 @@ import com.example.shinelon.mymdapp.ui.ThemeUIInterface;
  */
 
 public class ThemeButton extends Button implements ThemeUIInterface {
-    private int attr_drawable = -1;
-    private int attr_texcolor = -1;
+    private int mAttrDrawable = -1;
+    private int mAttrTexcolor = -1;
     public ThemeButton(Context context) {
         super(context);
     }
 
     public ThemeButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.attr_drawable = ViewAttributeUtil.getBackgroundAttribute(attrs);
-        this.attr_texcolor = ViewAttributeUtil.getTextColorAttribute(attrs);
+        this.mAttrDrawable = ViewAttributeUtil.getBackgroundAttribute(attrs);
+        this.mAttrTexcolor = ViewAttributeUtil.getTextColorAttribute(attrs);
     }
 
     public ThemeButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.attr_drawable = ViewAttributeUtil.getBackgroundAttribute(attrs);
-        this.attr_texcolor = ViewAttributeUtil.getTextColorAttribute(attrs);
+        this.mAttrDrawable = ViewAttributeUtil.getBackgroundAttribute(attrs);
+        this.mAttrTexcolor = ViewAttributeUtil.getTextColorAttribute(attrs);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class ThemeButton extends Button implements ThemeUIInterface {
 
     @Override
     public void setTheme(Resources.Theme themeId) {
-        if (attr_drawable != -1) {
-            ViewAttributeUtil.applyBackgroundDrawable(this, themeId,attr_drawable);
+        if (mAttrDrawable != -1) {
+            ViewAttributeUtil.applyBackgroundDrawable(this, themeId, mAttrDrawable);
         }
-        if (attr_texcolor != -1) {
-            ViewAttributeUtil.applyTextColor(this, themeId,attr_texcolor);
+        if (mAttrTexcolor != -1) {
+            ViewAttributeUtil.applyTextColor(this, themeId, mAttrTexcolor);
         }
 
     }

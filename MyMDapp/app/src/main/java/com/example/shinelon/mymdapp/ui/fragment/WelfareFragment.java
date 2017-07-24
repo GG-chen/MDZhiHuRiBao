@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.example.shinelon.mymdapp.R;
@@ -29,18 +28,18 @@ import butterknife.InjectView;
 
 public class WelfareFragment extends BaseFragment implements WelfareFrg, WelfareAdapter.OnItemTouch {
     @InjectView(R.id.recycler)
-    public RecyclerView recyclerView;
-    private WelfareAdapter adapter;
-    private WelfarePresenter presenter;
-    private List<WelfareBean.WelfareItem> welfareBeen = new ArrayList<>();
-    private StaggeredGridLayoutManager manager;
-    private boolean loding = true;
+    public RecyclerView mRecyclerView;
+    private WelfareAdapter mAdapter;
+    private WelfarePresenter mPresenter;
+    private List<WelfareBean.WelfareItem> mWelfareBeen = new ArrayList<>();
+    private StaggeredGridLayoutManager mManager;
+    private boolean isLoding = true;
     private int mPage = 1;
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         }
     };
 
@@ -51,17 +50,17 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
     }
 
     private void initData() {
-        presenter.loadWelfare(String.valueOf(mPage));
+        mPresenter.loadWelfare(String.valueOf(mPage));
     }
 
     private void initview() {
-        presenter = new WelfarePresenter(context);
-        presenter.attachView(this);
-        adapter = new WelfareAdapter(welfareBeen, context);
-        manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+        mPresenter = new WelfarePresenter(mContext);
+        mPresenter.attachView(this);
+        mAdapter = new WelfareAdapter(mWelfareBeen, mContext);
+        mManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mManager);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 outRect.left = 16;
@@ -72,20 +71,20 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
                 }
             }
         });
-        recyclerView.addOnScrollListener(getOnBottomListener(manager));
-        adapter.setOnTouchListener(this);
+        mRecyclerView.addOnScrollListener(getOnBottomListener(mManager));
+        mAdapter.setOnTouchListener(this);
     }
     OnScrollListener getOnBottomListener(final StaggeredGridLayoutManager layoutManager) {
         return new RecyclerView.OnScrollListener() {
             @Override public void onScrolled(RecyclerView rv, int dx, int dy) {
                 boolean isBottom =
                         layoutManager.findLastCompletelyVisibleItemPositions(new int[2])[1] >=
-                                adapter.getItemCount() - 8;
+                                mAdapter.getItemCount() - 8;
                 if (isBottom) {
-                    if (!loding) {
+                    if (!isLoding) {
                         mPage += 1;
-                        loding = true;
-                        presenter.loadWelfare(String.valueOf(mPage));
+                        isLoding = true;
+                        mPresenter.loadWelfare(String.valueOf(mPage));
                     }
                 }
             }
@@ -93,9 +92,9 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState != 2) {
-                    adapter.setScoll(false);
+                    mAdapter.setScoll(false);
                 } else {
-                    adapter.setScoll(true);
+                    mAdapter.setScoll(true);
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
@@ -111,9 +110,9 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
     @Override
     public void loadMore(WelfareBean bean) {
         log("WelfareFragment   loadMore" + mPage);
-        loding = false;
+        isLoding = false;
         if (bean != null) {
-            adapter.addItem(bean.getResults());
+            mAdapter.addItem(bean.getResults());
             handler.sendEmptyMessage(0);
         }
     }
@@ -128,9 +127,9 @@ public class WelfareFragment extends BaseFragment implements WelfareFrg, Welfare
     }
 
     private void startNewAcitivity(ActivityOptionsCompat options, String url, String name) {
-        Intent intent = new Intent(context, WelfareDetailActivity.class);
+        Intent intent = new Intent(mContext, WelfareDetailActivity.class);
         intent.putExtra("imageUrl", url);
         intent.putExtra("imageName", name);
-        ActivityCompat.startActivity(context, intent, options.toBundle());
+        ActivityCompat.startActivity(mContext, intent, options.toBundle());
     }
 }

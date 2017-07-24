@@ -15,10 +15,7 @@ import com.example.shinelon.mymdapp.utils.SPUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-
-import butterknife.ButterKnife;
 
 
 /**
@@ -27,17 +24,17 @@ import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
     protected static String TAG_LOG = null;
-    protected Context context;
-    protected ImageUtils imageUtils;
-    protected DisplayMetrics displayMetrics;
-    private Date data;
-    public SPUtil spUtil;
+    protected Context mContext;
+    protected ImageUtils mImageUtils;
+    protected DisplayMetrics mDisplayMetrics;
+    private Date mData;
+    public SPUtil mSpUtil;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        spUtil = MyApplication.getSpUtil();
-        if (spUtil.get("theme", "DayTheme").equals("DayTheme")) {
+        mSpUtil = MyApplication.getmSpUtil();
+        if (mSpUtil.get("theme", "DayTheme").equals("DayTheme")) {
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
@@ -45,9 +42,9 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("onCreate", " its me !!!");
         TAG_LOG = this.getClass().getName();
-        context = this;
-        imageUtils = ImageUtils.getInstance();
-        imageUtils.setContext(MyApplication.getContext());
+        mContext = this;
+        mImageUtils = ImageUtils.getInstance();
+        mImageUtils.setmContext(MyApplication.getContext());
         initActivity();
         initView();
         initData();
@@ -79,18 +76,18 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void showToast(String msg) {
         if (msg != null) {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }
     }
     protected String getScreenSize() {
-       displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels + "*" + displayMetrics.heightPixels;
+       mDisplayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+        return mDisplayMetrics.widthPixels + "*" + mDisplayMetrics.heightPixels;
     }
     public String getCurrentData() {
-        data = new Date();
+        mData = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        String nowTime = format.format(data);
+        String nowTime = format.format(mData);
         return nowTime;
 
     }

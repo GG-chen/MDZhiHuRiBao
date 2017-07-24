@@ -3,7 +3,6 @@ package com.example.shinelon.mymdapp.modle.http.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,23 +16,23 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class ImageUtils {
-    public static ImageUtils imageUtils;
-    private Context context;
+    public static ImageUtils mImageUtils;
+    private Context mContext;
 
     public static ImageUtils getInstance() {
-        if (imageUtils == null) {
+        if (mImageUtils == null) {
             synchronized (ImageUtils.class) {
-                if (imageUtils == null) {
-                    imageUtils = new ImageUtils();
+                if (mImageUtils == null) {
+                    mImageUtils = new ImageUtils();
                 }
             }
         }
-        return imageUtils;
+        return mImageUtils;
 
     }
 
-    public void setContext(Context c) {
-        this.context = c;
+    public void setmContext(Context c) {
+        this.mContext = c;
     }
 
     private ImageUtils() {
@@ -41,12 +40,12 @@ public class ImageUtils {
 
 
     public Boolean setImage(ImageView v, String url) {
-        if (context == null && url == null) {
+        if (mContext == null && url == null) {
             Log.d("ImageUtil" , "没有context或者url");
             return false;
         }
         try {
-            Glide.with(context).load(url).error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.ALL).into(v);
+            Glide.with(mContext).load(url).error(R.drawable.error).diskCacheStrategy(DiskCacheStrategy.ALL).into(v);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +56,7 @@ public class ImageUtils {
     public Bitmap getBitmap(String url) {
         Bitmap bitmap = null;
         try {
-            bitmap =  Glide.with(context).load(url).asBitmap().centerCrop().into(600,600).get();
+            bitmap =  Glide.with(mContext).load(url).asBitmap().centerCrop().into(600,600).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

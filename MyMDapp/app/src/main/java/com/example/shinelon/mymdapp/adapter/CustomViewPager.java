@@ -23,18 +23,18 @@ import java.util.List;
  */
 
 public class CustomViewPager extends PagerAdapter {
-    public static List<NewsListBean.TopStoried> list ;
-    private Context context;
+    public static List<NewsListBean.TopStoried> mList;
+    private Context mContext;
 
     public CustomViewPager(Context context, List<NewsListBean.TopStoried> list) {
-        this.list = list;
-        this.context = context;
+        this.mList = list;
+        this.mContext = context;
 
     }
 
     @Override
     public int getCount() {
-        return ((Integer.MAX_VALUE/10) * list.size());
+        return ((Integer.MAX_VALUE/10) * mList.size());
     }
 
     @Override
@@ -48,25 +48,25 @@ public class CustomViewPager extends PagerAdapter {
             position = 0;
         }
         Log.d("CustomViewPager", "instantiateItem: position: " + position);
-        final View item = View.inflate(context, R.layout.header_item, null);
-            item.setTag(list.get(position).getId());
+        final View item = View.inflate(mContext, R.layout.header_item, null);
+            item.setTag(mList.get(position).getId());
             ImageView imageView = (ImageView) item.findViewById(R.id.header_img);
             TextView title = (TextView) item.findViewById(R.id.header_text);
             try {
 
-                ImageUtils.getInstance().setImage(imageView, list.get(position).getImages());
-                title.setText(list.get(position).getTitle());
+                ImageUtils.getInstance().setImage(imageView, mList.get(position).getImages());
+                title.setText(mList.get(position).getTitle());
             } catch (Exception e) {
                 e.toString();
             }
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, NewDetailActivity.class);
+                Intent intent = new Intent(mContext, NewDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", (Integer) item.getTag());
                 intent.putExtra("bundle", bundle);
-                context.startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
         container.addView(item);
@@ -80,9 +80,9 @@ public class CustomViewPager extends PagerAdapter {
 
     public void addList(List<NewsListBean.TopStoried> item) {
         Log.d("CustomViewPager", "addList: " + item.size());
-        if (list != null) {
-            list.clear();
-            this.list = item;
+        if (mList != null) {
+            mList.clear();
+            this.mList = item;
             notifyDataSetChanged();
         }
     }
