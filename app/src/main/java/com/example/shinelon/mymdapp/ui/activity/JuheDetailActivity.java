@@ -15,26 +15,28 @@ import android.widget.TextView;
 import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 
+import butterknife.InjectView;
+
 /**
  * Created by Shinelon on 2017/3/11.
  */
 
 public class JuheDetailActivity extends BaseToolBarActivity {
-   // @InjectView(R.id.juhe_detail_wv)
-    public WebView mWebView;
-   /// @InjectView(R.id.juhe_appbar)
+    @InjectView(R.id.juhe_detail_wv)
+    WebView mWebView;
+    @InjectView(R.id.juhe_appbar)
     AppBarLayout mAppbar;
 
-    //@InjectView(R.id.juhe_toolbar)
+    @InjectView(R.id.juhe_toolbar)
     Toolbar mToolbar;
 
-   // @InjectView(R.id.juhe_author)
+    @InjectView(R.id.juhe_author)
     TextView mAuthor;
 
-   // @InjectView(R.id.backdrop)
+    @InjectView(R.id.backdrop)
     ImageView mImageView;
 
-   // @InjectView(R.id.collapsing_toolbar)
+    @InjectView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingToolbar;
     private String mUrl;
     private String mTitle;
@@ -42,7 +44,6 @@ public class JuheDetailActivity extends BaseToolBarActivity {
 
     @Override
     protected void initActivity() {
-        setContentView(R.layout.juhe_detail_layout);
         mUrl = getIntent().getStringExtra("juheUrl");
         mTitle = getIntent().getStringExtra("juheTitle");
         mImageUrl = getIntent().getStringExtra("juheImage");
@@ -59,12 +60,6 @@ public class JuheDetailActivity extends BaseToolBarActivity {
     }
 
     protected void initViews() {
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.juhe_collapsing_toolbar);
-        mWebView = (WebView) findViewById(R.id.juhe_detail_wv);
-        mToolbar = (Toolbar) findViewById(R.id.juhe_toolbar);
-        mAppbar = (AppBarLayout) findViewById(R.id.juhe_appbar);
-        mAuthor = (TextView) findViewById(R.id.juhe_author);
-        mImageView = (ImageView) findViewById(R.id.juhe_backdrop);
         mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -76,6 +71,11 @@ public class JuheDetailActivity extends BaseToolBarActivity {
     }
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.juhe_detail_layout;
+    }
+
+    @Override
     protected void initData() {
         mWebView.loadUrl(mUrl);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -84,7 +84,7 @@ public class JuheDetailActivity extends BaseToolBarActivity {
         mWebView.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
         mWebView.setBackgroundColor(Color.parseColor("#000000")); // 设置背景色
         mWebView.getBackground().setAlpha(0);
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -100,7 +100,6 @@ public class JuheDetailActivity extends BaseToolBarActivity {
         mCollapsingToolbar.setTitle(mTitle);
         ImageUtils.getInstance().setImage(mImageView, mImageUrl);
     }
-
 
 
     @Override

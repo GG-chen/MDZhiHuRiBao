@@ -9,19 +9,22 @@ import com.example.shinelon.mymdapp.R;
 import com.example.shinelon.mymdapp.modle.http.utils.ImageUtils;
 import com.example.shinelon.mymdapp.utils.BitmapSaveUtil;
 
+import butterknife.InjectView;
+
 /**
  * Created by Shinelon on 2017/3/4.
  */
 public class WelfareDetailActivity extends BaseActivity implements View.OnClickListener {
     private String mUrl;
     private String mName;
-    private ImageView mImageView;
-    private ImageView mDownload;
+    @InjectView(R.id.detail_img)
+    ImageView mImageView;
+    @InjectView(R.id.download)
+    ImageView mDownload;
     private BitmapSaveUtil mSaveUtil;
 
     @Override
     protected void initActivity() {
-        setContentView(R.layout.detail_welfare_layout);
         mUrl = getIntent().getStringExtra("imageUrl");
         mName = getIntent().getStringExtra("imageName");
         mSaveUtil = BitmapSaveUtil.getSaveUtil(this);
@@ -29,13 +32,16 @@ public class WelfareDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
-        mImageView = (ImageView) findViewById(R.id.detail_img);
-        mDownload = (ImageView) findViewById(R.id.download);
         mDownload.setOnClickListener(this);
         if (mSaveUtil.isSave(mName)) {
             mDownload.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.detail_welfare_layout;
     }
 
     @Override

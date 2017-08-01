@@ -17,6 +17,7 @@ import com.example.shinelon.mymdapp.modle.http.WelcomeService;
 import com.example.shinelon.mymdapp.modle.http.utils.RetrofitUtils;
 
 
+import butterknife.InjectView;
 import rx.Observer;
 import rx.schedulers.Schedulers;
 
@@ -33,12 +34,26 @@ public class WelcomeActivity extends BaseActivity {
     public static final int LODE_SUCCESS = 1;
     public static final int LODE_ERROR = 2;
     public static final int ENTER_MAIN = 3;
-    private ImageView mImageView;
+    @InjectView(R.id.welcome_view)
+     ImageView mImageView;
     private WelcomeBean mWelcomeBean;
     private WelcomeService mWelcomeService;
 
 
 
+    @Override
+    protected void initView() {
+        mText = (TextView) findViewById(R.id.writer);
+        wel_relative = (RelativeLayout) findViewById(R.id.wel_relative);
+        AnimationSet set = new AnimationSet(true);
+        AlphaAnimation scaleAnimation = new AlphaAnimation(0.5f,1.0f);
+        scaleAnimation.setDuration(1000);
+        set.addAnimation(scaleAnimation);
+        set.setFillAfter(true);
+        wel_relative.startAnimation(set);
+
+
+    }
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -68,33 +83,23 @@ public class WelcomeActivity extends BaseActivity {
         }
     };
     private RelativeLayout wel_relative;
-    private TextView mText;
 
+
+    private TextView mText;
 
     @Override
     protected void initActivity() {
-        setContentView(R.layout.splash_layout);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.splash_layout;
+    }
+    @Override
     protected void initData() {
         mWelcomeService = RetrofitUtils.createApi(this,WelcomeService.class);
         getData();
-    }
-    @Override
-    protected void initView() {
-        mImageView = (ImageView) findViewById(R.id.welcome_view);
-        mText = (TextView) findViewById(R.id.writer);
-        wel_relative = (RelativeLayout) findViewById(R.id.wel_relative);
-        AnimationSet set = new AnimationSet(true);
-        AlphaAnimation scaleAnimation = new AlphaAnimation(0.5f,1.0f);
-        scaleAnimation.setDuration(1000);
-        set.addAnimation(scaleAnimation);
-        set.setFillAfter(true);
-        wel_relative.startAnimation(set);
-
-
     }
 
     public void getData() {
@@ -112,25 +117,21 @@ public class WelcomeActivity extends BaseActivity {
                         @Override
                         public void onError(Throwable e) {
                             Log.d("WelcomeActivity", e.toString());
-                            handler.sendEmptyMessageDelayed(LODE_ERROR, ENTER_TIME);
+                            handler.sendEmptyMessage(LODE_ERROR);
                         }
 
                         @Override
                         public void onNext(WelcomeBean welcomeBean) {
                             Log.d("WelcomeActivity", "next!!" + welcomeBean.getCreatives().get(0).getUrl());
-                            sendHandler(welcomeBean);
+                            Message message = handler.obtainMessage();
+                            message.what = LODE_SUCCESS;
+                            message.obj = welcomeBean;
+                            handler.sendMessage(message);
                         }
 
                     });
-        //handler.sendEmptyMessageDelayed(LODE_ERROR, ENTER_TIME);
 
     }
 
-    private void sendHandler(WelcomeBean welcomeBean) {
-        Message message = handler.obtainMessage();
-        message.what = LODE_SUCCESS;
-        message.obj = welcomeBean;
-        handler.sendMessage(message);
-    }
 
 }

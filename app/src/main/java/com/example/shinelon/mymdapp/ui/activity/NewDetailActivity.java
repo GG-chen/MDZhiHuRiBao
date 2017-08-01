@@ -15,6 +15,11 @@ import com.example.shinelon.mymdapp.ui.fragment.NewDetailFragment;
 public class NewDetailActivity extends BaseToolBarActivity{
 
     @Override
+    protected int getContentViewId() {
+        return R.layout.detail_new_layout;
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         Bundle bundle = getIntent().getBundleExtra("bundle");
@@ -25,10 +30,6 @@ public class NewDetailActivity extends BaseToolBarActivity{
 
     }
 
-    @Override
-    protected void initActivity() {
-        setContentView(R.layout.detail_new_layout);
-    }
 
 
     @Override

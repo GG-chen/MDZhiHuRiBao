@@ -17,18 +17,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.ButterKnife;
+
 
 /**
  * Created by Shinelon on 2017/1/31.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected static String TAG_LOG = null;
     protected Context mContext;
     protected ImageUtils mImageUtils;
     protected DisplayMetrics mDisplayMetrics;
     private Date mData;
     public SPUtil mSpUtil;
+    private Toast mToast;
 
 
     @Override
@@ -45,11 +48,15 @@ public class BaseActivity extends AppCompatActivity {
         mContext = this;
         mImageUtils = ImageUtils.getInstance();
         mImageUtils.setmContext(MyApplication.getContext());
+        setContentView(getContentViewId());
+        ButterKnife.inject(this);
         initActivity();
         initView();
         initData();
 
     }
+
+    protected abstract int getContentViewId();
 
     protected void intent2(Class clazz) {
         Intent intent = new Intent(this, clazz);
@@ -75,9 +82,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showToast(String msg) {
-        if (msg != null) {
-            Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        if (mToast == null) {
+            mToast = new Toast(this);
         }
+        mToast.setText(msg);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.show();
     }
     protected String getScreenSize() {
        mDisplayMetrics = new DisplayMetrics();
